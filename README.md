@@ -9,3 +9,5 @@ Progress:
 9/9 - Wrote and submitted project proposal
 
 9/19 - Drafted and wrote Software Requirement Specification for project
+
+10/7 - Drafted and wrote Design Document for project
