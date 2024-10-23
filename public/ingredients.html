@@ -42,12 +42,15 @@
         <div class="header2">
             <button onclick="location.href='ingredients.html'" class="button button1">Ingredient Search</button>
             <button onclick="location.href='cookbook.html'"  class="button button1">Personal Cookbook</button>
+            <button onclick="location.href='search_history.html'"  class="button button1">Search History</button>
         </div>
 
-        <div class="ingredientsSearch">
+        <form class="ingredientsSearch" id="searchForm">
             <label for="ingredients">Ingredients:</label><br>
             <input type="text" id="ingredients" name="ingredients"><br>
-        </div>
+            <button type="submit" class="enterButton">Search</button> 
+        </form>
+        
 
     <footer>
         <p>  &copy;2024 JHEM's Cookbook</p>
@@ -56,6 +59,27 @@
 </main>
 
 
-<script src="script.js"></script>
+<script src="script.js">
+    document.querySelector('.ingredientsSearch').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const searchBar = document.getElementById('ingredients');
+        const query = searchBar.value.trim();
+
+        if (query) {
+            fetch('/save-search', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query: query })
+            }).then(response => response.json()).then(data => {
+                console.log(data);
+                // Redirect to search history page after saving
+                window.location.href = '/search_history';
+            });
+        }
+    });
+</script>
+
+
 </body>
 </html>
