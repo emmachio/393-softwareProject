@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search History</title>
+    <link rel="stylesheet" type="text/css" href="format.css">
+</head>
+<body>
+    <main>
+        <h2>Search History</h2>
+        <ul id="historyList"></ul>
+        <button onclick="location.href='cookbook.html'">Back to Cookbook</button>
+    </main>
+
+    <script>
+        // Fetch and display search history
+        fetch('/search-history')
+            .then(response => response.json())
+            .then(data => {
+                const historyList = document.getElementById('historyList');
+                data.history.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    historyList.appendChild(li);
+                });
+            })
+            .catch(err => console.error('Error fetching search history:', err));
+    </script>
+</body>
+</html>
