@@ -9,7 +9,7 @@ const scrape = async () => {
     await page.goto(url);
 
     const title = await page.title();
-    console.log('Page Title: ${title}');
+    console.log(title);
 
     //await browser.close();
 };
