@@ -1,7 +1,7 @@
 import puppeteer from "puppeteer";
 
 const scrape = async () => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({headless: false});
     const page = await browser.newPage();
 
     const url = 'https://books.toscrape.com';
@@ -11,7 +11,7 @@ const scrape = async () => {
     const title = await page.title();
     console.log('Page Title: ${title}');
 
-    await browser.close();
+    //await browser.close();
 };
 
 scrape();
