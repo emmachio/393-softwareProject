@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="format.css">
+    <style>
+        .container {
+            padding-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        #recipeName {
+            width: 40vw;
+            height: 1.850em;
+            font-size: 0.875em;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #prepTime {
+            width: 40vw;
+            height: 1.850em;
+            font-size: 0.875em;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+
+        label {
+            font-family: Lucida-Console, monospace;
+            width: 150px;
+            font-size: 0.875em;
+            margin-bottom: 10px;
+            padding-right: 10px;
+            padding-left: 50px;
+        }
+
+        #ingredientList {
+            width: 40vw;
+            height: 1.850em;
+            font-size: 0.875em;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #instructions {
+            width: 40vw;
+            height: 9.0em;
+            font-size: 0.875em;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .submitButton {
+            padding-top: 20px;
+            padding-left: 210px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<main>
+        <div class="header1">
+            <h2>JHEM's Cookbook</h2>
+        </div>
+        <div class="header2">
+            <button onclick="location.href='ingredients.html'" class="button button1">Ingredient Search</button>
+            <button onclick="location.href='cookbook.html'"  class="button button1">Personal Cookbook</button>
+        </div>
+
+        <div class="container">
+            <label for="recipeName">Recipe Name:</label><br>
+            <input type="text" id="recipeName" name="recipeName"><br>
+        </div>
+        <div class = "container">
+            <label for="prepTime">Prep Time (min):</label><br>
+            <input type="text" id="prepTime" name="prepTime"><br>
+        </div>
+        <div class="container">
+            <label for="ingredientList">Ingredients (separated by commas):</label><br>
+            <input type="text" id="ingredientList" name="ingredientList"><br>
+        </div>
+        <div class="container">
+            <label for="instructions">Instructions:</label><br>
+            <input type="text" id="instructions" name="instructions"><br>
+        </div>
+
+        <div class="submitButton">
+            <button class="button button2">Add Recipe</button>
+        </div>
+
+    <footer>
+        <p>  &copy;2024 JHEM's Cookbook</p>
+    </footer>
+</main>
+
+
+<script src="script.js"></script>
+</body>
+</html>

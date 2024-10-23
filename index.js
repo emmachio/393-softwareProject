@@ -5,11 +5,15 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
-// Route to serve the index.html file
+// Route to serve the ingredients.html file
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '', 'firstpage.html'));
+    res.sendFile(path.join(__dirname, '', 'public/ingredients.html'));
+});
+
+app.get('/second', (req, res) => {
+    res.sendFile(path.join(__dirname, '', 'public/cookbook.html'));
 });
 
 // Start the server
