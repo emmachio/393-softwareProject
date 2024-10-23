@@ -1,5 +1,10 @@
 import puppeteer from 'puppeteer';
 
+let recipeLink;
+let recipe = new Recipe();
+let ingredient;
+let ingredientsArray;
+
 class Recipe {
     constructor() {
         // Ingredient array as a property of the class
@@ -10,12 +15,8 @@ class Recipe {
     addIngredient(ingredient) {
         this.ingredientsArray.push(ingredient);
     }
+
 }
-
-
-let recipeLink;
-let recipe = new Recipe();
-let ingredient;
 
 
 const browser = await puppeteer.launch({headless: false});
@@ -42,6 +43,7 @@ void function  addRecipeLink(recipeLink){
         }
     }
 
-
-
-
+ void function addRecipe(recipeLink, ingredientsArray){
+    recipe.push(recipe);
+     console.log(recipeLink);
+}
