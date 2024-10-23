@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="format.css">
+    <style>
+
+        #ingredients {
+            width: 65vw;
+            height: 1.850em;
+            padding: 10px;
+            font-size: 18px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+
+        label[for=ingredients] {
+            font-family: Lucida-Console, monospace;
+            font-size: 0.875em;
+            margin-bottom: 10px;
+        }
+
+        .ingredientsSearch {
+            /*transform: translateY(-300px);*/
+            position: relative;
+            top: 50px;
+            text-align: center;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<main>
+        <div class="header1">
+            <h2>JHEM's Cookbook</h2>
+        </div>
+        <div class="header2">
+            <button onclick="location.href='ingredients.html'" class="button button1">Ingredient Search</button>
+            <button onclick="location.href='cookbook.html'"  class="button button1">Personal Cookbook</button>
+        </div>
+
+        <div class="ingredientsSearch">
+            <label for="ingredients">Ingredients:</label><br>
+            <input type="text" id="ingredients" name="ingredients"><br>
+        </div>
+
+    <footer>
+        <p>  &copy;2024 JHEM's Cookbook</p>
+    </footer>
+
+</main>
+
+
+<script src="script.js"></script>
+</body>
+</html>
