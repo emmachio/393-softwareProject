@@ -25,6 +25,9 @@ const page = await browser.newPage();
 await page.goto('https://walnuts.org/recipes/?');
 //Set page size
 await page.setViewport({width: 1080, height: 1024})
+//get title
+const title = await page.title();
+console.log(title);
 // Pause for 10 seconds, to see what's going on.
 await new Promise(r => setTimeout(r, 10000));
 
