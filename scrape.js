@@ -15,6 +15,8 @@ const scrape = async () => {
         const elements = document.querySelectorAll('h3 a');  // Select the <a> tags inside <h3>
         return Array.from(elements).map(el => el.textContent.trim());  // Extract only the text content
       });
+
+      recipeNames.forEach(name => console.log(name));
     
     //await browser.close();
 };
