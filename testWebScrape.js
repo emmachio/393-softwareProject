@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer';
 
-class Recipe {
+export class Recipe {
     constructor(name, image) {
         this.name = name;
         this.image = image;
@@ -48,6 +48,20 @@ const recipeNames = await page.evaluate(() => {
         };
     });
 });
+
+export function findRecipesByIngredient(ingredient, recipeObjects) {
+    const matches = recipeObjects.filter(recipe =>
+        recipe.name.toLowerCase().includes(ingredient.toLowerCase())
+    );
+
+    if (matches.length > 0) {
+        matches.forEach(match => console.log(`Found Recipe: ${match.name}, Image URL: ${match.image}`));
+        return matches.map(match => ({ name: match.name, image: match.image }));
+    } else {
+        console.log(`No recipes found with ingredient: ${ingredient}`);
+        return [];
+    }
+}
 // Map over the extracted data to create instances of the Recipe class
 const recipeObjects = recipeNames.map(({ recipeName, imageUrl }) => new Recipe(recipeName, imageUrl));
 recipeObjects.forEach(recipe => recipe.printRecipe());
