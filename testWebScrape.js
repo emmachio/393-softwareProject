@@ -19,7 +19,7 @@ let recipeLink;
 let recipe = new Recipe();
 let ingredient;
 
-
+//makes it open
 const browser = await puppeteer.launch({headless: false});
 //const browser = await puppeteer.launch();
 const page = await browser.newPage();

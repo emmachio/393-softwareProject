@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer";
-
+//implement auto testing in github
 const scrape = async () => {
     const browser = await puppeteer.launch({headless: false});
     const page = await browser.newPage();
