@@ -68,7 +68,7 @@ recipeObjects.forEach(recipe => recipe.printRecipe());
 
 
 // Pause for 10 seconds, to see what's going on.
-//await new Promise(r => setTimeout(r, 10000));
+//await new Pro mise(r => setTimeout(r, 10000));
 
 
 
