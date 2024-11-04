@@ -1,6 +1,6 @@
 import Jasmine from 'jasmine';
 const jasmine = new Jasmine();
-import { Recipe, findRecipesByIngredient } from '/Users/janintowe/Documents/GitHub/JHEMCookbook/testWebScrape.js';
+import { Recipe, findRecipesByIngredient } from '/Users/janintowe/Documents/GitHub/JHEMCookbook/webScrapeWalnut.js';
 
 // Mock data for testing
 const mockRecipes = [
