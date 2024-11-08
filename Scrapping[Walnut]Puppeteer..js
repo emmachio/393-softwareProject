@@ -6,7 +6,7 @@ export class Recipe {
         this.image = image;
     }
     printRecipe() {
-        console.log(`Recipe: ${this.name}, Image URL: ${this.image}`);
+        //console.log(`Recipe: ${this.name}, Image URL: ${this.image}`);
     }
     // Method to add an ingredient to the array
     addIngredient(ingredient) {
@@ -20,29 +20,32 @@ let recipe = new Recipe();
 let ingredient;
 
 //makes it open
-// const browser = await puppeteer.launch({headless: false});
-const browser = await puppeteer.launch();
+const browser = await puppeteer.launch({headless: false});
+//const browser = await puppeteer.launch();
 const page = await browser.newPage();
 //What page to go to
-await page.goto('https://www.allrecipes.com/recipes/455/everyday-cooking/more-meal-ideas/30-minute-meals/');
+await page.goto('https://walnuts.org/recipes/?');
 //Set page size
 await page.setViewport({width: 1080, height: 1024})
 //get title and log it
 const title = await page.title();
 console.log('PAGE TITLE: '+title);
+
 //get and log array of recipe names
 const recipeNames = await page.evaluate(() => {
+    const elements = document.querySelectorAll('.recipe-item');  // Select all the recipe containers
 
-    const elements = document.querySelectorAll('div.card__content > span > span');
-    console.log("elements");
-    console.log(elements);
     return Array.from(elements).map(el => {
-        // const recipeNameElement = el.querySelector('#mntl-card-list-items_5-0 > div.card__content > span > span');
-        const recipeName = el.textContent.trim();
-        // const imgElement = el.querySelector('div.loc.card__top > div.card__media.mntl-universal-image.card__media.universal-image__container > div > img');  // Select the <img> tag inside the .image div
-        // const imageUrl = imgElement ? imgElement.src : null;  // Extract the image URL
-        console.log(recipeName);
-        return { recipeName };
+        const recipeNameElement = el.querySelector('h3 a');  // Select the <a> tag inside <h3> (recipe name)
+        const recipeName = recipeNameElement ? recipeNameElement.textContent.trim() : null;  // Extract recipe name
+
+        const imgElement = el.querySelector('.image img');  // Select the <img> tag inside the .image div
+        const imageUrl = imgElement ? imgElement.src : null;  // Extract the image URL
+
+        return {
+            recipeName,   // Recipe name from the <h3> <a> tag
+            imageUrl      // Image URL from the <img> tag
+        };
     });
 });
 
@@ -52,7 +55,7 @@ export function findRecipesByIngredient(ingredient, recipeObjects) {
     );
 
     if (matches.length > 0) {
-        matches.forEach(match => console.log(`Found Recipe: ${match.name}, Image URL: ${match.image}`));
+        //matches.forEach(match => console.log(`Found Recipe: ${match.name}, Image URL: ${match.image}`));
         return matches.map(match => ({ name: match.name, image: match.image }));
     } else {
         console.log(`No recipes found with ingredient: ${ingredient}`);
@@ -60,10 +63,8 @@ export function findRecipesByIngredient(ingredient, recipeObjects) {
     }
 }
 // Map over the extracted data to create instances of the Recipe class
-console.log(recipeNames);
-
-// const recipeObjects = recipeNames.map(({ recipeName, imageUrl }) => new Recipe(recipeName, imageUrl));
-// recipeObjects.forEach(recipe => recipe.printRecipe());
+const recipeObjects = recipeNames.map(({ recipeName, imageUrl }) => new Recipe(recipeName, imageUrl));
+recipeObjects.forEach(recipe => recipe.printRecipe());
 
 
 // Pause for 10 seconds, to see what's going on.

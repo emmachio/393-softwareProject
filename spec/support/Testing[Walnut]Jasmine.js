@@ -1,6 +1,6 @@
 import Jasmine from 'jasmine';
 const jasmine = new Jasmine();
-import { Recipe, findRecipesByIngredient } from '/Users/janintowe/Documents/GitHub/JHEMCookbook/testWebScrape.js';
+import { Recipe, findRecipesByIngredient } from '/Users/janintowe/Documents/GitHub/JHEMCookbook/Scrapping[Walnut]Puppeteer..js';
 
 // Mock data for testing
 const mockRecipes = [
@@ -15,11 +15,14 @@ describe('findRecipesByIngredient', () => {
         const result = findRecipesByIngredient(ingredient, mockRecipes);
 
         expect(result.length).toBe(2);
-        expect(result).toEqual([
+        expect(result).toEqual(
+            [
             { name: 'Walnut Delight', image: 'https://link-to-image1.jpg' },
             { name: 'Spicy Walnut Sauce', image: 'https://link-to-image3.jpg' }
-        ]);
+        ]
+        );
     });
+
 
     it('should return an empty array if no recipes contain the specified ingredient', () => {
         const ingredient = 'banana';
