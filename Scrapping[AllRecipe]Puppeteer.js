@@ -1,12 +1,14 @@
 import puppeteer from 'puppeteer';
 
 export class Recipe {
-    constructor(name, image) {
+    constructor(name) {
         this.name = name;
-        this.image = image;
+        //this.image = image;
+        this.ingredientsArray = [];
     }
     printRecipe() {
-        console.log(`Recipe: ${this.name}, Image URL: ${this.image}`);
+        //console.log(`Recipe: ${this.name}, Image URL: ${this.image}`);
+        console.log(`Recipe: ${this.name}`);
     }
     // Method to add an ingredient to the array
     addIngredient(ingredient) {
@@ -30,6 +32,8 @@ await page.setViewport({width: 1080, height: 1024})
 //get title and log it
 const title = await page.title();
 console.log('PAGE TITLE: '+title);
+
+/* OLD METHOD FOR RECIPE NAMES
 //get and log array of recipe names
 const recipeNames = await page.evaluate(() => {
 
@@ -45,6 +49,43 @@ const recipeNames = await page.evaluate(() => {
         return { recipeName };
     });
 });
+*/
+
+//BEGIN NEW CODE
+
+// Name can be shortened later, this is to lyk exactly what it does for now
+const recipeNameAndIngredients = await page.evaluate(() => {
+    const elements = document.querySelectorAll('a'); // Need link access so have to broaden selection to <a>
+    return Array.from(elements).map(el => {
+        const recipeName = el.querySelector('div.card__content > span > span').textContent.trim; // gets title in same way as before
+        const recipeLink = el.href; // grabs link from top of <a> header in html
+        return {recipeName, recipeLink};
+    });
+});
+
+// Loops through all elements and creates Recipe objects
+for (const {recipeName, recipeLink} of recipeNameAndIngredients) {
+    await page.goto(recipeLink, {waitUntil: 'networkidle2'});
+
+    const recipe = new Recipe(recipeName);
+
+    // Goes into ingredient list and gets ingredients
+    const ingredients = await page.evaluate(() => {
+        const ingredientElements = document.querySelectorAll('#mm-recipes-structured-ingredients_1-0 > ul > li');
+        // individual ingredient selector: #mm-recipes-structured-ingredients_1-0 > ul > li:nth-child(1)
+        return Array.from(ingredientElements).map(el => el.innerText.trim());
+    });
+
+    // Adds ingredienst to Recipe object
+    ingredients.forEach(ingredient => recipe.addIngredient(ingredient));
+
+    console.log(`Recipe: ${recipe.name}`);
+    console.log('Ingredients:', recipe.ingredientsArray);
+}
+
+await browser.close();
+
+//END NEW CODE
 
 export function findRecipesByIngredient(ingredient, recipeObjects) {
     const matches = recipeObjects.filter(recipe =>
