@@ -15,18 +15,18 @@
     </main>
 
     <script>
-        // Fetch and display search history
-        fetch('/search-history')
-            .then(response => response.json())
-            .then(data => {
-                const historyList = document.getElementById('historyList');
-                data.history.forEach(item => {
-                    const li = document.createElement('li');
-                    li.textContent = item;
-                    historyList.appendChild(li);
-                });
-            })
-            .catch(err => console.error('Error fetching search history:', err));
+        // Retrieve search history from local storage
+        const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+
+        const historyList = document.getElementById('historyList');
+
+        // Display each search in the history
+        searchHistory.forEach(query => {
+            const listItem = document.createElement('li');
+            listItem.classList.add('historyItem');
+            listItem.textContent = query;
+            historyList.appendChild(listItem);
+        });
     </script>
 </body>
 </html>

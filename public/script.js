@@ -1,39 +1,23 @@
-// Function to handle recipe search
-async function searchRecipe() {
-    const searchTerm = document.getElementById('search-input').value;
-    if (!searchTerm) return alert('Please enter a search term');
-  
-    // Send search term to the backend
-    await fetch('http://localhost:3000/api/search', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ searchTerm }),
-    });
-  
-    // Display mock results
-    const resultsList = document.getElementById('recipe-results');
-    resultsList.innerHTML = `
-      <li>Recipe for ${searchTerm} 1</li>
-      <li>Recipe for ${searchTerm} 2</li>
-    `;
+document.getElementById('searchForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const searchBar = document.getElementById('ingredients');
+  const query = searchBar.value.trim();
+
+  if (query) {
+      // Retrieve existing history from local storage or initialize an empty array
+      let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+      
+      // Add the new search query to the history
+      searchHistory.push(query);
+
+      // Save updated history back to local storage
+      localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+
+      // Clear the search input
+      searchBar.value = '';
+
+      // Optional: Log a confirmation message
+      console.log("Search saved to history.");
   }
-  
-  // Function to load search history
-  async function loadSearchHistory() {
-    const response = await fetch('http://localhost:3000/api/history');
-    const history = await response.json();
-  
-    const historyList = document.getElementById('history-list');
-    historyList.innerHTML = '';
-    history.forEach((term) => {
-      const listItem = document.createElement('li');
-      listItem.textContent = term;
-      historyList.appendChild(listItem);
-    });
-  }
-  
-  // Load history if on the search history page
-  if (document.getElementById('history-list')) {
-    loadSearchHistory();
-  }
-  
+});
