@@ -6,7 +6,7 @@ const scrape = async () => {
 
     const url = 'https://walnuts.org/recipes/?';
 
-    await page.goto(url);
+    await page.goto(url, {waitUntil: 'load'});
 
     const title = await page.title();
     console.log('PAGE TITLE: ' + title);
