@@ -24,6 +24,19 @@
                 padding: 10px;
                 border-bottom: 1px solid #ddd;
             }
+            
+            .backButton {
+                font-family: Lucida-Console, monospace;
+                border: none;
+                padding: 8px 16px;
+                background-color: #f2f2f2;
+                text-align: left;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 0.875em;
+                margin: 1px 1px;
+                cursor: pointer;
+            }
         </style>
     </head>
     
@@ -32,21 +45,32 @@
         <div class="historyContainer">
             <ul id="historyList" class="historyList"></ul>
         </div>
-        <button onclick="location.href='cookbook.html'">Back to Cookbook</button>
+        <button onclick="location.href='ingredients.html'" class="backButton">Back to Cookbook</button>
     
         <script>
             // Retrieve search history from local storage
             const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
-    
+
+            // Target the history list container
             const historyList = document.getElementById('historyList');
+
+            // Store list items in an array
+            const listItems = [];
     
             // Display each search in the history
             searchHistory.forEach(query => {
                 const listItem = document.createElement('li');
-                listItem.classList.add('historyItem');
+                listItem.classList.add(query);
                 listItem.textContent = query;
                 historyList.appendChild(listItem);
+                
+                // Add the listItem to the array
+                listItems.push(listItem);
             });
+
+
+            console.log(listItems); // Logs the array of `<li>` elements
+
         </script>
     </body>
     
