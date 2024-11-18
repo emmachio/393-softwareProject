@@ -3,6 +3,8 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="format.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
 
@@ -64,7 +66,13 @@
             display: flex;
         }
 
-        #string-container {
+        #stringContainer {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        #recipeContainer {
             font-family: Arial, sans-serif;
             margin: 20px;
             padding: 10px;
@@ -92,17 +100,16 @@
                 <input type="text" id="ingredients" name="ingredients" placeholder="add ingredients"><br>
                 <!--                                <button type="submit" class="enterButton">Search</button>-->
             </form>
-            <div id="string-container">
-                <!-- Strings will be dynamically added here -->
-
-            </div>
-            <script src="ingredientsFront.js"></script>
 
         </div>
-        <!--        </div>-->
         <div class="column2">
-            <p>Some text..</p>
+            <p>testing</p>
+            <div id="output"></div>
+            <p>testing1</p>
+            <script src="recipeFront.cjs"></script>
+            <p>testing2</p>
         </div>
+
     </div>
 
 
