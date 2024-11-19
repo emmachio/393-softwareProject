@@ -29,6 +29,35 @@
             flex-direction: column;
             align-items: center;
         }
+
+        #recipeContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .recipe {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+            width: 300px;
+            background-color: #f9f9f9;
+        }
+
+        .recipe h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .recipe ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .recipe li {
+            margin: 5px 0;
+        }
+
     </style>
 </head>
 
@@ -49,13 +78,16 @@
             <input type="text" id="ingredients" name="ingredients"><br>
             <button type="submit" class="enterButton">Search</button>
         </form>
+
+        <div id="recipeContainer"></div>
+
+    </main>
         
 
     <footer>
         <p>  &copy;2024 JHEM's Cookbook</p>
     </footer>
 
-</main>
 
 
 <script src="script.js">

@@ -63,7 +63,7 @@ const recipeNameAndIngredients = await page.evaluate(() => {
     });
 });
 
-// Loops through all elements and creates Recipe objects
+/*// Loops through all elements and creates Recipe objects
 for (const {recipeName, recipeLink} of recipeNameAndIngredients) {
     await page.goto(recipeLink, {waitUntil: 'networkidle2'});
 
@@ -82,8 +82,39 @@ for (const {recipeName, recipeLink} of recipeNameAndIngredients) {
     console.log(`Recipe: ${recipe.name}`);
     console.log('Ingredients:', recipe.ingredientsArray);
 }
+    
 
+await browser.close(); */
+
+const recipes = []; // Array to store all Recipe objects
+
+// Inside the loop, add the recipe to the array
+for (const { recipeName, recipeLink } of recipeNameAndIngredients) {
+    await page.goto(recipeLink, { waitUntil: 'networkidle2' });
+
+    const recipe = new Recipe(recipeName);
+
+    const ingredients = await page.evaluate(() => {
+        const ingredientElements = document.querySelectorAll('#mm-recipes-structured-ingredients_1-0 > ul > li');
+        return Array.from(ingredientElements).map(el => el.innerText.trim());
+    });
+
+    ingredients.forEach(ingredient => recipe.addIngredient(ingredient));
+    recipes.push(recipe); // Add the Recipe object to the array
+}
 await browser.close();
+
+const express = require('express');
+const app = express();
+
+app.get('/api/recipes', (req, res) => {
+    res.json(recipes); // Send the recipes array as JSON
+});
+
+app.listen(3000, () => console.log('Server running on http://localhost:3000'));
+
+
+
 
 //END NEW CODE
 

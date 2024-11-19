@@ -21,3 +21,61 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
       console.log("Search saved to history.");
   }
 });
+
+async function fetchRecipes() {
+  try {
+      const response = await fetch('/api/recipes');
+      const recipes = await response.json();
+      displayRecipes(recipes);
+  } catch (error) {
+      console.error('Error fetching recipes:', error);
+  }
+}
+
+function displayRecipes(recipes) {
+  const recipeContainer = document.getElementById('recipeContainer');
+  recipeContainer.innerHTML = ''; // Clear previous content
+
+  recipes.forEach(recipe => {
+      const recipeDiv = document.createElement('div');
+      recipeDiv.className = 'recipe';
+      recipeDiv.innerHTML = `
+          <h2>${recipe.name}</h2>
+          <ul>
+              ${recipe.ingredientsArray.map(ing => `<li>${ing}</li>`).join('')}
+          </ul>
+      `;
+      recipeContainer.appendChild(recipeDiv);
+  });
+}
+
+// Call fetchRecipes when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+  const recipes = [
+      { name: "Spicy Chicken Curry", ingredients: ["Chicken", "Spices", "Tomatoes"] },
+      { name: "Grilled Chicken Salad", ingredients: ["Chicken", "Lettuce", "Dressing"] }
+  ];
+
+  const recipeContainer = document.getElementById('recipeContainer');
+
+  recipes.forEach(recipe => {
+      const recipeDiv = document.createElement('div');
+      recipeDiv.classList.add('recipe');
+
+      const title = document.createElement('h2');
+      title.textContent = recipe.name;
+
+      const ingredientList = document.createElement('ul');
+      recipe.ingredients.forEach(ingredient => {
+          const listItem = document.createElement('li');
+          listItem.textContent = ingredient;
+          ingredientList.appendChild(listItem);
+      });
+
+      recipeDiv.appendChild(title);
+      recipeDiv.appendChild(ingredientList);
+      recipeContainer.appendChild(recipeDiv);
+  });
+});
+
+

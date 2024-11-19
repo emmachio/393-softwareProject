@@ -47,3 +47,6 @@ app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
 
+app.get('/api/recipes', (req, res) => {
+    res.json([{ name: "Recipe1" }, { name: "Recipe2" }]); // Example response
+});
