@@ -3,53 +3,117 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="format.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
 
         #ingredients {
-            width: 65vw;
-            height: 1.850em;
+            width: 20vw;
+            height: 1.650em;
             padding: 10px;
-            font-size: 18px;
+            font-size: 0.775em;
             border: 2px solid #ccc;
             border-radius: 5px;
         }
 
         label[for=ingredients] {
             font-family: Lucida-Console, monospace;
-            font-size: 0.875em;
+            font-size: 0.775em;
             margin-bottom: 10px;
         }
 
         .ingredientsSearch {
             position: relative;
-            top: 50px;
-            text-align: center;
-            height: 80vh;
+            top: 20px;
+            text-align: left;
+            height: 5vh;
+            width: 80%;
+            padding-left: 2vh;
+            padding-top: 0;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-direction: column; /* Stack the label and input vertically */
+            align-items: flex-start;
+            margin-top: 0;
+            /*display: flex;*/
+            /*flex-direction: column;*/
+            /*align-items: center;*/
         }
+
+        .ingredientsSearch label {
+            margin: 0;
+            padding: 0;
+        }
+
+        .ingredientsSearch input {
+            margin: 0;
+            padding: 0;
+        }
+
+        .ingredientsSearch input::placeholder{
+            font-family: Lucida-Console, monospace;
+            font-size: 0.875em;
+        }
+
+        .column1 {
+            width: 30%;
+        }
+        .column2 {
+            width: 70%;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        #stringContainer {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        #recipeContainer {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
     </style>
 </head>
 
 <body>
 
 <main>
-        <div class="header1">
-            <h2>JHEM's Cookbook</h2>
+    <div class="header1">
+        <h2>JHEM's Cookbook</h2>
+    </div>
+    <div class="header2">
+        <button onclick="location.href='ingredients.html'" class="button button1">Ingredient Search</button>
+        <button onclick="location.href='cookbook.html'"  class="button button1">Personal Cookbook</button>
+        <button onclick="location.href='search_history.html'"  class="button button1">Search History</button>
+    </div>
+    <div class = "container">
+        <div class="column1">
+            <form class="ingredientsSearch" id="searchForm">
+                <label for="ingredients">Ingredients:</label><br>
+                <input type="text" id="ingredients" name="ingredients" placeholder="add ingredients"><br>
+                <!--                                <button type="submit" class="enterButton">Search</button>-->
+            </form>
+
         </div>
-        <div class="header2">
-            <button onclick="location.href='ingredients.html'" class="button button1">Ingredient Search</button>
-            <button onclick="location.href='cookbook.html'"  class="button button1">Personal Cookbook</button>
-            <button onclick="location.href='search_history.html'"  class="button button1">Search History</button>
+        <div class="column2">
+            <p>testing</p>
+            <div id="output"></div>
+            <p>testing1</p>
+            <script src="recipeFront.cjs"></script>
+            <p>testing2</p>
         </div>
 
-        <form class="ingredientsSearch" id="searchForm">
-            <label for="ingredients">Ingredients:</label><br>
-            <input type="text" id="ingredients" name="ingredients"><br>
-            <button type="submit" class="enterButton">Search</button>
-        </form>
-        
+    </div>
+
+
+
 
     <footer>
         <p>  &copy;2024 JHEM's Cookbook</p>
@@ -78,6 +142,8 @@
         }
     });
 </script>
+
+
 
 
 </body>
