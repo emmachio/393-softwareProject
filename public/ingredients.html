@@ -12,10 +12,6 @@
             padding: 0;
             box-sizing: border-box;
         }
-        /*img{*/
-        /*    width: 450em;*/
-        /*    height: 450em;*/
-        /*}*/
 
         body {
             width: 100%;
@@ -116,6 +112,7 @@
         <button onclick="location.href='cookbook.html'"  class="button button1">Personal Cookbook</button>
         <button onclick="location.href='search_history.html'"  class="button button1">Search History</button>
     </div>
+<!--    container for holding the two columns-->
     <div class = "container">
         <div class="column1">
             <form class="ingredientsSearch" id="searchForm">
@@ -126,8 +123,8 @@
         </div>
         <div class="column2">
             <div class="widgetContainer">
+<!--                dynamically adding recipe results onto the website-->
                 <div id="output"></div>
-<!--                <img src="https://walnuts.wpenginepowered.com/wp-content/uploads/2024/10/CWC-S0295-OnionRings_1500x1000-900x600.jpg">-->
                 <script src="recipeFront.js"></script>
             </div>
 
