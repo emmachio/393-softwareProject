@@ -7,27 +7,34 @@ const dom = new JSDOM(`<!DOCTYPE html><html><body><div id="output"></div></body>
 const document = dom.window.document;
 const appDiv = document.getElementById('output');
 
+
 // Array of objects
-const data = [
-    { name: "Alice", age: 25, city: "New York" },
-    { name: "Bob", age: 30, city: "Los Angeles" },
-    { name: "Charlie", age: 35, city: "Chicago" }
-];
+const recipes = [{ name: 'Walnut Delight', image: 'https://link-to-image1.jpg' }];
 
 // Get the HTML element where you want to display the data
 const outputDiv = document.getElementById('output');
 
-// Iterate through the array of objects
-data.forEach(item => {
-    // Create a paragraph element for each object
-    const paragraph = document.createElement('p');
+recipes.forEach(item => {
+    const individualRecipe = document.createElement('div');
+    individualRecipe.classList.add('recipeWidget')
 
-    // Set the text content to display the object's properties
-    paragraph.textContent = `Name: ${item.name}, Age: ${item.age}, City: ${item.city}`;
+    const link = document.createElement('a');
+    link.href = `details.html?name=${encodeURIComponent(item.name)}`;
 
-    // Append the paragraph to the output div
-    outputDiv.appendChild(paragraph);
-});
 
-// Log the resulting HTML for debugging (optional)
-console.log(dom.window.document.body.innerHTML);
+    // const img = document.querySelector('img');
+    const img = document.createElement('img');
+    img.width = 150;
+    img.height 150;
+    img.src = item.image;
+    img.alt='{$item.name}';
+    link.appendChild(img);
+
+    individualRecipe.appendChild(link)
+
+    const widgetContainer = document.querySelector('.widgetContainer');
+    widgetContainer.appendChild(individualRecipe);
+    console.log(individualRecipe.outerHTML);
+    individualRecipe.offsetHeight;
+
+    widgetContainer.appendChild(individualRecipe);
