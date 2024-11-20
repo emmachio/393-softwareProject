@@ -12,6 +12,10 @@
             padding: 0;
             box-sizing: border-box;
         }
+        /*img{*/
+        /*    width: 450em;*/
+        /*    height: 450em;*/
+        /*}*/
 
         body {
             width: 100%;
@@ -82,7 +86,7 @@
             background: floralwhite;
             padding: 10px;
             text-align: center;
-            width: 150px; /* Fixed width for each item */
+            width: 230px; /* Fixed width for each item */
             flex-grow: 1;
          }
         .widgetContainer {
@@ -90,6 +94,12 @@
             flex-wrap: wrap;
             gap: 10px;
             max-width: 100%;
+            padding: 10px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
         }
 
     </style>
@@ -111,13 +121,13 @@
             <form class="ingredientsSearch" id="searchForm">
                 <label for="ingredients">Ingredients:</label><br>
                 <input type="text" id="ingredients" name="ingredients" placeholder="add ingredients"><br>
-                <!--                                <button type="submit" class="enterButton">Search</button>-->
             </form>
 
         </div>
         <div class="column2">
             <div class="widgetContainer">
                 <div id="output"></div>
+<!--                <img src="https://walnuts.wpenginepowered.com/wp-content/uploads/2024/10/CWC-S0295-OnionRings_1500x1000-900x600.jpg">-->
                 <script src="recipeFront.js"></script>
             </div>
 
