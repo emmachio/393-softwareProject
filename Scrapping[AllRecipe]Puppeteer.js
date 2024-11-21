@@ -22,18 +22,19 @@ let recipe = new Recipe();
 let ingredient;
 
 //makes it open
-// const browser = await puppeteer.launch({headless: false});
-const browser = await puppeteer.launch();
+const browser = await puppeteer.launch({headless: false});
+//const browser = await puppeteer.launch();
 const page = await browser.newPage();
 //What page to go to
-await page.goto('https://www.allrecipes.com/recipes/455/everyday-cooking/more-meal-ideas/30-minute-meals/');
+await page.goto('https://www.allrecipes.com/recipes/455/everyday-cooking/more-meal-ideas/30-minute-meals/', {waitUntil: "domcontentloaded", timeout: 0});
 //Set page size
 await page.setViewport({width: 1080, height: 1024})
 //get title and log it
 const title = await page.title();
 console.log('PAGE TITLE: '+title);
 
-/* OLD METHOD FOR RECIPE NAMES
+/*
+//OLD METHOD FOR RECIPE NAMES
 //get and log array of recipe names
 const recipeNames = await page.evaluate(() => {
 
@@ -51,14 +52,16 @@ const recipeNames = await page.evaluate(() => {
 });
 */
 
+
 //BEGIN NEW CODE
 
 // Name can be shortened later, this is to lyk exactly what it does for now
 const recipeNameAndIngredients = await page.evaluate(() => {
 
-    const elements = document.querySelectorAll('a.mntl-card-list-items'); // Broaden to <a> selector for each recipe
+    const elements = document.querySelectorAll('a.mntl-card-list-items'); // Specify to <a> card list items
 
-    return Array.from(elements).map(el => {
+    return Array.from(elements).filter(el => !el.href.includes('/gallery/') && !el.classList.contains('card--square-image-left')) //filters only allow for recipes to be added
+        .map(el => {
         const recipeName = el.querySelector('div.card__content > span > span.card__title-text')?.textContent.trim(); // gets title in same way as before
         const recipeLink = el.href; // grabs link from top of <a> header in html
         return {recipeName, recipeLink};
@@ -89,6 +92,7 @@ await browser.close();
 
 //END NEW CODE
 
+
 export function findRecipesByIngredient(ingredient, recipeObjects) {
     const matches = recipeObjects.filter(recipe =>
         recipe.name.toLowerCase().includes(ingredient.toLowerCase())
@@ -103,7 +107,7 @@ export function findRecipesByIngredient(ingredient, recipeObjects) {
     }
 }
 // Map over the extracted data to create instances of the Recipe class
-console.log(recipeNames);
+//console.log(recipeNames);
 
 // const recipeObjects = recipeNames.map(({ recipeName, imageUrl }) => new Recipe(recipeName, imageUrl));
 // recipeObjects.forEach(recipe => recipe.printRecipe());
