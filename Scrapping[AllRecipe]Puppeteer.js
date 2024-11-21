@@ -57,7 +57,7 @@ const recipeNames = await page.evaluate(() => {
 const recipeNameAndIngredients = await page.evaluate(() => {
     const elements = document.querySelectorAll('a'); // Need link access so have to broaden selection to <a>
     return Array.from(elements).map(el => {
-        const recipeName = el.querySelector('div.card__content > span > span').textContent.trim(); // gets title in same way as before
+        const recipeName = el.querySelector('div.card__content > span > span').textContent.trim; // gets title in same way as before
         const recipeLink = el.href; // grabs link from top of <a> header in html
         return {recipeName, recipeLink};
     });
