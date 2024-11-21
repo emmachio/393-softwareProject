@@ -55,9 +55,11 @@ const recipeNames = await page.evaluate(() => {
 
 // Name can be shortened later, this is to lyk exactly what it does for now
 const recipeNameAndIngredients = await page.evaluate(() => {
-    const elements = document.querySelectorAll('a'); // Need link access so have to broaden selection to <a>
+
+    const elements = document.querySelectorAll('a.mntl-card-list-items'); // Broaden to <a> selector for each recipe
+
     return Array.from(elements).map(el => {
-        const recipeName = el.querySelector('div.card__content > span > span').textContent.trim; // gets title in same way as before
+        const recipeName = el.querySelector('div.card__content > span > span.card__title-text')?.textContent.trim(); // gets title in same way as before
         const recipeLink = el.href; // grabs link from top of <a> header in html
         return {recipeName, recipeLink};
     });
@@ -76,7 +78,7 @@ for (const {recipeName, recipeLink} of recipeNameAndIngredients) {
         return Array.from(ingredientElements).map(el => el.innerText.trim());
     });
 
-    // Adds ingredienst to Recipe object
+    // Adds ingredients to Recipe object
     ingredients.forEach(ingredient => recipe.addIngredient(ingredient));
 
     console.log(`Recipe: ${recipe.name}`);
