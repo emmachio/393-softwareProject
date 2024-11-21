@@ -12,7 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.1",
-    "puppeteer": "^23.5.2"
+    "puppeteer": "^23.9.0"
   },
   "devDependencies": {
     "jasmine": "^5.4.0"

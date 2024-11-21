@@ -76,7 +76,7 @@ for (const {recipeName, recipeLink} of recipeNameAndIngredients) {
         return Array.from(ingredientElements).map(el => el.innerText.trim());
     });
 
-    // Adds ingredienst to Recipe object
+    // Adds ingredient to Recipe object
     ingredients.forEach(ingredient => recipe.addIngredient(ingredient));
 
     console.log(`Recipe: ${recipe.name}`);
@@ -87,6 +87,57 @@ await browser.close();
 
 //END NEW CODE
 
+//JANI STARTED CODING HERE
+
+const fs = require('fs');
+
+// Function to save recipe names and ingredients to a JSON file
+async function saveRecipesToJSON(page, fileName) {
+    const recipeNameAndIngredients = await page.evaluate(() => {
+        const elements = document.querySelectorAll('a');
+        return Array.from(elements).map(el => {
+            const recipeName = el.querySelector('div.card__content > span > span')?.textContent?.trim();
+            const recipeLink = el.href;
+            return { recipeName, recipeLink };
+        });
+    });
+
+    const recipes = [];
+    for (const { recipeName, recipeLink } of recipeNameAndIngredients) {
+        if (!recipeName || !recipeLink) continue;
+
+        await page.goto(recipeLink, { waitUntil: 'networkidle2' });
+
+        const ingredients = await page.evaluate(() => {
+            const ingredientElements = document.querySelectorAll('#mm-recipes-structured-ingredients_1-0 > ul > li');
+            return Array.from(ingredientElements).map(el => el.innerText.trim());
+        });
+
+        recipes.push({ name: recipeName, ingredients });
+    }
+
+    fs.writeFileSync(fileName, JSON.stringify(recipes, null, 2));
+    console.log(`Recipes saved to ${fileName}`);
+}
+
+
+//json file is called 'recipes.json'
+function findRecipesByIngredientsJani(fileName, userIngredients) {
+    const recipes = JSON.parse(fs.readFileSync(fileName, 'utf8'));
+
+    const matchingRecipes = recipes.filter(recipe =>
+        userIngredients.every(ingredient =>
+            recipe.ingredients.some(recipeIngredient =>
+                recipeIngredient.toLowerCase().includes(ingredient.toLowerCase())
+            )
+        )
+    );
+
+    return matchingRecipes;
+}
+
+
+//END OF JANI CODE
 export function findRecipesByIngredient(ingredient, recipeObjects) {
     const matches = recipeObjects.filter(recipe =>
         recipe.name.toLowerCase().includes(ingredient.toLowerCase())
@@ -113,6 +164,3 @@ console.log(recipeNames);
 
 
 //    Recipe: Test Recipe, Image URL: https://example.com/image.jpg
-
-
-
