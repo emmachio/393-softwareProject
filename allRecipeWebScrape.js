@@ -3,7 +3,7 @@ import puppeteer from 'puppeteer';
 import fs from 'fs';
 
 
-export class Recipe {
+class Recipe {
     constructor(name) {
         this.name = name;
         //this.image = image;
@@ -100,7 +100,7 @@ await browser.close();
 
 
 //Jani's Search
-function findRecipesByIngredientsJani(userIngredients, recipesArray) {
+export function findRecipesByIngredientsJani(userIngredients, recipesArray) {
     // Filter recipes by user ingredients
     const matchingRecipes = recipesArray.filter(recipe =>
         userIngredients.every(userIngredient =>
@@ -113,6 +113,9 @@ function findRecipesByIngredientsJani(userIngredients, recipesArray) {
     // Return the matching recipes
     return matchingRecipes;
 }
+// module.exports={findRecipesByIngredientsJani}
+;
+
 // //END NEW CODE
 //
 // export function findRecipesByIngredient(ingredient, recipeObjects) {
