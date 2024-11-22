@@ -25,5 +25,5 @@ jobs:
 
     # Step 4: Run Jasmine tests in the 'testing' folder
     - name: Run Jasmine tests
-      run: npx jasmine testing/
+      run: npx jasmine ./testing/spec/jasmineTestingSpec.js
 
