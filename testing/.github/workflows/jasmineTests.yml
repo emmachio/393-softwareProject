@@ -3,10 +3,10 @@ name: Run Jasmine Tests
 on:
   push:
     branches:
-      - main
+      - allrecipe-back-end
   pull_request:
     branches:
-      - main
+      - allrecipe-back-end
 
 jobs:
   test:
