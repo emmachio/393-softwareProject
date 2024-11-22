@@ -3,6 +3,7 @@ import puppeteer from 'puppeteer';
 export class Recipe {
     constructor(name) {
         this.name = name;
+        this.imageSrc = '';
         //this.image = image;
         this.ingredientsArray = [];
     }
@@ -64,12 +65,14 @@ const recipeNameAndIngredients = await page.evaluate(() => {
         .map(el => {
         const recipeName = el.querySelector('div.card__content > span > span.card__title-text')?.textContent.trim(); // gets title in same way as before
         const recipeLink = el.href; // grabs link from top of <a> header in html
-        return {recipeName, recipeLink};
+        const imgElement = el.querySelector('div.loc.card__top > div.card__media > div > img');
+        const imageSrc = imgElement?.getAttribute('data-src') || imgElement?.src || null;
+        return {recipeName, recipeLink, imageSrc};
     });
 });
 
 // Loops through all elements and creates Recipe objects
-for (const {recipeName, recipeLink} of recipeNameAndIngredients) {
+for (const {recipeName, recipeLink, imageSrc} of recipeNameAndIngredients) {
     await page.goto(recipeLink, {waitUntil: 'networkidle2'});
 
     const recipe = new Recipe(recipeName);
@@ -84,8 +87,14 @@ for (const {recipeName, recipeLink} of recipeNameAndIngredients) {
     // Adds ingredients to Recipe object
     ingredients.forEach(ingredient => recipe.addIngredient(ingredient));
 
+    recipe.imageSrc = imageSrc;
+
     console.log(`Recipe: ${recipe.name}`);
+    console.log('Image URL: ', recipe.imageSrc)
     console.log('Ingredients:', recipe.ingredientsArray);
+
+    //console.log(recipeName, recipeLink, imageSrc);
+
 }
 
 await browser.close();
