@@ -23,19 +23,18 @@ let recipe = new Recipe();
 let ingredient;
 
 //makes it open
-const browser = await puppeteer.launch({headless: false});
-//const browser = await puppeteer.launch();
+// const browser = await puppeteer.launch({headless: false});
+const browser = await puppeteer.launch();
 const page = await browser.newPage();
 //What page to go to
-await page.goto('https://www.allrecipes.com/recipes/455/everyday-cooking/more-meal-ideas/30-minute-meals/', {waitUntil: "domcontentloaded", timeout: 0});
+await page.goto('https://www.allrecipes.com/recipes/455/everyday-cooking/more-meal-ideas/30-minute-meals/');
 //Set page size
 await page.setViewport({width: 1080, height: 1024})
 //get title and log it
 const title = await page.title();
 console.log('PAGE TITLE: '+title);
 
-/*
-//OLD METHOD FOR RECIPE NAMES
+/* OLD METHOD FOR RECIPE NAMES
 //get and log array of recipe names
 const recipeNames = await page.evaluate(() => {
 
@@ -53,17 +52,13 @@ const recipeNames = await page.evaluate(() => {
 });
 */
 
-
 //BEGIN NEW CODE
 
 // Name can be shortened later, this is to lyk exactly what it does for now
 const recipeNameAndIngredients = await page.evaluate(() => {
-
-    const elements = document.querySelectorAll('a.mntl-card-list-items'); // Specify to <a> card list items
-
-    return Array.from(elements).filter(el => !el.href.includes('/gallery/') && !el.classList.contains('card--square-image-left')) //filters only allow for recipes to be added
-        .map(el => {
-        const recipeName = el.querySelector('div.card__content > span > span.card__title-text')?.textContent.trim(); // gets title in same way as before
+    const elements = document.querySelectorAll('a'); // Need link access so have to broaden selection to <a>
+    return Array.from(elements).map(el => {
+        const recipeName = el.querySelector('div.card__content > span > span').textContent.trim; // gets title in same way as before
         const recipeLink = el.href; // grabs link from top of <a> header in html
         const imgElement = el.querySelector('div.loc.card__top > div.card__media > div > img');
         const imageSrc = imgElement?.getAttribute('data-src') || imgElement?.src || null;
@@ -84,7 +79,7 @@ for (const {recipeName, recipeLink, imageSrc} of recipeNameAndIngredients) {
         return Array.from(ingredientElements).map(el => el.innerText.trim());
     });
 
-    // Adds ingredients to Recipe object
+    // Adds ingredient to Recipe object
     ingredients.forEach(ingredient => recipe.addIngredient(ingredient));
 
     recipe.imageSrc = imageSrc;
@@ -101,7 +96,57 @@ await browser.close();
 
 //END NEW CODE
 
+//JANI STARTED CODING HERE
 
+const fs = require('fs');
+
+// Function to save recipe names and ingredients to a JSON file
+async function saveRecipesToJSON(page, fileName) {
+    const recipeNameAndIngredients = await page.evaluate(() => {
+        const elements = document.querySelectorAll('a');
+        return Array.from(elements).map(el => {
+            const recipeName = el.querySelector('div.card__content > span > span')?.textContent?.trim();
+            const recipeLink = el.href;
+            return { recipeName, recipeLink };
+        });
+    });
+
+    const recipes = [];
+    for (const { recipeName, recipeLink } of recipeNameAndIngredients) {
+        if (!recipeName || !recipeLink) continue;
+
+        await page.goto(recipeLink, { waitUntil: 'networkidle2' });
+
+        const ingredients = await page.evaluate(() => {
+            const ingredientElements = document.querySelectorAll('#mm-recipes-structured-ingredients_1-0 > ul > li');
+            return Array.from(ingredientElements).map(el => el.innerText.trim());
+        });
+
+        recipes.push({ name: recipeName, ingredients });
+    }
+
+    fs.writeFileSync(fileName, JSON.stringify(recipes, null, 2));
+    console.log(`Recipes saved to ${fileName}`);
+}
+
+
+//json file is called 'recipes.json'
+function findRecipesByIngredientsJani(fileName, userIngredients) {
+    const recipes = JSON.parse(fs.readFileSync(fileName, 'utf8'));
+
+    const matchingRecipes = recipes.filter(recipe =>
+        userIngredients.every(ingredient =>
+            recipe.ingredients.some(recipeIngredient =>
+                recipeIngredient.toLowerCase().includes(ingredient.toLowerCase())
+            )
+        )
+    );
+
+    return matchingRecipes;
+}
+
+
+//END OF JANI CODE
 export function findRecipesByIngredient(ingredient, recipeObjects) {
     const matches = recipeObjects.filter(recipe =>
         recipe.name.toLowerCase().includes(ingredient.toLowerCase())
@@ -116,7 +161,7 @@ export function findRecipesByIngredient(ingredient, recipeObjects) {
     }
 }
 // Map over the extracted data to create instances of the Recipe class
-//console.log(recipeNames);
+console.log(recipeNames);
 
 // const recipeObjects = recipeNames.map(({ recipeName, imageUrl }) => new Recipe(recipeName, imageUrl));
 // recipeObjects.forEach(recipe => recipe.printRecipe());
@@ -128,6 +173,3 @@ export function findRecipesByIngredient(ingredient, recipeObjects) {
 
 
 //    Recipe: Test Recipe, Image URL: https://example.com/image.jpg
-
-
-
