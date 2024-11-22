@@ -1,5 +1,7 @@
+import { JSDOM } from 'jsdom';
 const jsdom = require("jsdom");
-const { JSDOM } = jsdom;
+
+//const { JSDOM } = jsdom;
 
 const dom = new JSDOM(`
     <html>
