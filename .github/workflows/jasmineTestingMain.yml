@@ -1,0 +1,16 @@
+name: Example Workflow
+
+on:
+  push:
+    branches:
+      - main   # Run only on the 'main' branch
+  pull_request:
+    branches:
+      - main   # Trigger on pull requests targeting 'main'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
