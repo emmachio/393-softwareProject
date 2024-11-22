@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search History</title>
+    <script defer src="script.js"></script>
+    <link rel="stylesheet" type="text/css" href="format.css">
+</head>
+<body>
+    <main>
+        <h2>Search History</h2>
+        <ul id="historyList"></ul>
+        <button onclick="location.href='cookbook.html'">Back to Cookbook</button>
+    </main>
+
+    <script>
+        // Retrieve search history from local storage
+        const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+
+        const historyList = document.getElementById('historyList');
+
+        // Display each search in the history
+        searchHistory.forEach(query => {
+            const listItem = document.createElement('li');
+            listItem.classList.add('historyItem');
+            listItem.textContent = query;
+            historyList.appendChild(listItem);
+        });
+    </script>
+</body>
+</html>

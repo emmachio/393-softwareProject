@@ -101,13 +101,17 @@ await browser.close();
 
 //Jani's Search
 function findRecipesByIngredientsJani(userIngredients, recipesArray) {
-    return recipesArray.filter(recipe =>
+    // Filter recipes by user ingredients
+    const matchingRecipes = recipesArray.filter(recipe =>
         userIngredients.every(userIngredient =>
             recipe.ingredientsArray.some(recipeIngredient =>
                 recipeIngredient.toLowerCase().includes(userIngredient.toLowerCase())
             )
         )
     );
+
+    // Return the matching recipes
+    return matchingRecipes;
 }
 // //END NEW CODE
 //
