@@ -7,7 +7,7 @@ on:
   pull_request:
     branches:
       - allrecipe-back-end          # Run on pull requests targeting 
-'main'
+
 
 jobs:
   test:
