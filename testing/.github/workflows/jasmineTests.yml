@@ -1,19 +1,19 @@
-name: Run Jasmine Tests
+name: Jasmine Tests on Feature Branch
 
 on:
   push:
     branches:
-      - allrecipe-back-end
+      - allrecipe-back-end   # Run workflow only on pushes to 'feature-branch'
   pull_request:
     branches:
-      - allrecipe-back-end
+      - allrecipe-back-end   # Run workflow on pull requests targeting 'feature-branch'
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out code
+    - name: Checkout code
       uses: actions/checkout@v3
 
     - name: Set up Node.js
@@ -24,6 +24,6 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Run Jasmine tests
+    - name: Run tests
       run: npm test
 
