@@ -49,33 +49,80 @@ function displayRecipes(recipes) {
   });
 }
 
-// Call fetchRecipes when the page loads
-document.addEventListener('DOMContentLoaded', () => {
-  const recipes = [
-      { name: "Spicy Chicken Curry", ingredients: ["Chicken", "Spices", "Tomatoes"] },
-      { name: "Grilled Chicken Salad", ingredients: ["Chicken", "Lettuce", "Dressing"] }
-  ];
+document.getElementById('searchForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
 
-  const recipeContainer = document.getElementById('recipeContainer');
+    const searchBar = document.getElementById('ingredients');
+    const query = searchBar.value.trim();
 
-  recipes.forEach(recipe => {
-      const recipeDiv = document.createElement('div');
-      recipeDiv.classList.add('recipe');
+    if (query) {
+        const response = await fetch('/search', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query })
+        });
 
-      const title = document.createElement('h2');
-      title.textContent = recipe.name;
-
-      const ingredientList = document.createElement('ul');
-      recipe.ingredients.forEach(ingredient => {
-          const listItem = document.createElement('li');
-          listItem.textContent = ingredient;
-          ingredientList.appendChild(listItem);
-      });
-
-      recipeDiv.appendChild(title);
-      recipeDiv.appendChild(ingredientList);
-      recipeContainer.appendChild(recipeDiv);
-  });
+        if (response.ok) {
+            const results = await response.json();
+            displayResults(results); // Call a function to display search results
+        } else {
+            console.error('Search failed:', response.statusText);
+        }
+    }
 });
 
 
+
+
+
+console.log(listItems); // Logs the array of `<li>` elements
+
+
+function displayResults(results) {
+    const container = document.getElementById('recipeContainer');
+    container.innerHTML = ''; // Clear previous results
+
+    results.forEach(recipe => {
+        const recipeDiv = document.createElement('div');
+        recipeDiv.className = 'recipe';
+        recipeDiv.innerHTML = `
+            <h2>${recipe.name}</h2>
+            <ul>
+                ${recipe.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}
+            </ul>
+        `;
+        container.appendChild(recipeDiv);
+    });
+}
+
+
+// Fetch recipes from the backend and display them
+fetch('http://localhost:3000/api/recipes') // Match your backend endpoint
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        const recipeList = document.getElementById('recipe-list');
+        if (data.length === 0) {
+            recipeList.innerHTML = '<p>No recipes found.</p>';
+            return;
+        }
+
+        data.forEach(recipe => {
+            const recipeDiv = document.createElement('div');
+            recipeDiv.classList.add('recipe');
+            recipeDiv.innerHTML = `
+                <h2>${recipe.title}</h2>
+                <p><strong>Ingredients:</strong> ${recipe.ingredients.join(', ')}</p>
+                <p><strong>Steps:</strong> ${recipe.steps}</p>
+            `;
+            recipeList.appendChild(recipeDiv);
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching recipes:', error);
+        document.getElementById('recipe-list').innerHTML = '<p>Error loading recipes. Please try again later.</p>';
+    });

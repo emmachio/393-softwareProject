@@ -30,10 +30,13 @@
             align-items: center;
         }
 
-        #recipeContainer {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
+        #ingredients {
+            width: 70%;
+            height: 2em;
+            font-size: 18px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
 
         .recipe {
@@ -58,6 +61,151 @@
             margin: 5px 0;
         }
 
+
+        .container {
+            display: flex;
+            justify-content: space-between; /* Space between the two columns */
+            padding: 20px;
+        }
+
+        /* Styling for the left column containing the search form */
+        .leftColumn {
+            flex: 1; /* Take up 50% of the width */
+            padding: 20px;
+        }
+
+        .ingredientsSearch {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #ingredients {
+            width: 70%;
+            height: 2em;
+            font-size: 18px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .enterButton {
+            font-family: Lucida-Console, monospace;
+            border: none;
+            padding: 15px 32px;
+            background-color: #f2f2f2;
+            text-align: left;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.875em;
+            margin: 1px 1px;
+            cursor: pointer;
+        }
+
+        .searchedIngredient {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Styling for the right column containing search results */
+        .rightColumn {
+            flex: 1 1 45%; /* Take up 50% of the width */
+            padding: 20px;
+            border-left: 1px solid #ccc; /* Adds a separator line */
+        }
+
+        .resultItem {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+            background-color: #fff;
+        }
+
+        .searchSection {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .searchResults {
+            flex: 3;
+            border: 1px solid #ddd;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+
+        .searchResults h2 {
+            font-size: 1.25em;
+            margin-bottom: 10px;
+        }
+
+        .searchResults ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .searchResults li {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .resultsSection {
+            flex: 1;
+            margin-left: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .resultItem {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+            background-color: #fff;
+        }
+
+        .leftColumn {
+            flex: 1 1 45%;
+            align-items: left;
+        }
+
+        .searchedIngredient {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .rightColumn {
+            flex: 1; /* Take up 50% of the width */
+            align-items: right;
+            padding: 20px;
+            border-left: 1px solid #ccc; /* Adds a separator line */
+            max-height: 80vh; /* Optional: restrict the height of results column */
+            overflow-y: auto; 
+        }
+
+        .SHButton {
+            font-family: Lucida-Console, monospace;
+            border: none;
+            padding: 8px 16px;
+            background-color: #f2f2f2;
+            text-align: left;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.875em;
+            margin: 1px 1px;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 
@@ -67,19 +215,34 @@
         <div class="header1">
             <h2>JHEM's Cookbook</h2>
         </div>
-        <div class="header2">
-            <button onclick="location.href='ingredients.html'" class="button button1">Ingredient Search</button>
-            <button onclick="location.href='cookbook.html'"  class="button button1">Personal Cookbook</button>
-            <button onclick="location.href='search_history.html'"  class="button button1">Search History</button>
+
+        <div class="container">
+            <div class="leftColumn">
+                <div class="header2">
+                    <button onclick="location.href='ingredients.html'" class="button button1">Ingredient Search</button>
+                    <button onclick="location.href='cookbook.html'"  class="button button1">Personal Cookbook</button>
+                    <button onclick="location.href='search_history.html'"  class="button button1">Search History</button>
+                </div>
+        
+                <form class="ingredientsSearch" id="searchForm">
+                    <label for="ingredients">Ingredients:</label><br>
+                    <input type="text" id="ingredients" name="ingredients"><br>
+                    <button type="submit" class="enterButton">Search</button>
+                </form>
+
+                <!-- Display the searched ingredient -->
+                <div id="searchedIngredient" class="searchedIngredient"></div>
+            </div>
         </div>
 
-        <form class="ingredientsSearch" id="searchForm">
-            <label for="ingredients">Ingredients:</label><br>
-            <input type="text" id="ingredients" name="ingredients"><br>
-            <button type="submit" class="enterButton">Search</button>
-        </form>
-
-        <div id="recipeContainer"></div>
+        <div class="rightColumn">
+            <!-- Search History Section -->
+            <h2>Search Results</h2>
+            <div class="searchResults">
+                    <ul id="resultsList"></ul>
+            </div>
+            <button onclick="location.href='search_history.html'" class="SHbutton">Go to Search History</button>
+        </div>
 
     </main>
         
@@ -91,24 +254,61 @@
 
 
 <script src="script.js">
-    document.querySelector('.ingredientsSearch').addEventListener('submit', function(event) {
-        event.preventDefault();
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-        const searchBar = document.getElementById('ingredients');
-        const query = searchBar.value.trim();
+            const searchBar = document.getElementById('ingredients');
+            const query = searchBar.value.trim();
 
-        if (query) {
-            fetch('/save-search', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query: query })
-            }).then(response => response.json()).then(data => {
-                console.log(data);
-                // Redirect to search history page after saving
-                window.location.href = '/search_history';
-            });
-        }
-    });
+            if (query) {
+                fetch('/save-search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: query })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Display results in the searchResults container
+                    const resultsList = document.getElementById('resultsList');
+                    resultsList.innerHTML = ''; // Clear existing results
+
+                    if (data.results && data.results.length > 0) {
+                        data.results.forEach(result => {
+                            const listItem = document.createElement('li');
+                            listItem.textContent = result.title; // Customize based on your data
+                            resultsList.appendChild(listItem);
+                        });
+                    } else {
+                        const noResults = document.createElement('li');
+                        noResults.textContent = 'No results found';
+                        resultsList.appendChild(noResults);
+                    }
+                });
+            }
+        });
+
+        // Retrieve search history from local storage
+        const searchResults = JSON.parse(localStorage.getItem('searchResults')) || [];
+
+        // Target the history list container
+        const historyList = document.getElementById('historyList');
+
+        // Store list items in an array
+        const listItems = [];
+
+        // Display each search in the history
+        searchResults.forEach(query => {
+            const listItem = document.createElement('li');
+            listItem.classList.add(query);
+            listItem.textContent = query;
+            historyList.appendChild(listItem);
+            listItem.style.padding = "5px";
+            listItem.style.marginBottom = "8px";
+            listItem.style.borderBottom = "1px solid #ddd";
+            
+            // Add the listItem to the array
+            listItems.push(listItem);
+        });
 </script>
 
 

@@ -4,25 +4,36 @@
     <head>
         <link rel="stylesheet" type="text/css" href="format.css">
         <style>
+            h2 {
+                font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+                display: inline-block; 
+                padding: 10px 25px; 
+                border-radius: 2px; 
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+
             body {
                 font-family: Arial, sans-serif;
                 text-align: center;
             }
     
             .historyContainer {
-                margin-top: 50px;
+                font-family: Lucida-Console, monospace;
+                margin-top: 30px;
                 width: 70%;
                 margin: auto;
             }
     
             .historyList {
                 list-style-type: none;
-                padding: 0;
+                margin-top: 0px;
+                padding: 15px;
             }
     
             .historyItem {
-                padding: 10px;
-                border-bottom: 1px solid #ddd;
+                padding: 15px;
+                margin-bottom: 10px; 
             }
             
             .backButton {
@@ -63,6 +74,9 @@
                 listItem.classList.add(query);
                 listItem.textContent = query;
                 historyList.appendChild(listItem);
+                listItem.style.padding = "5px";
+                listItem.style.marginBottom = "8px";
+                listItem.style.borderBottom = "1px solid #ddd";
                 
                 // Add the listItem to the array
                 listItems.push(listItem);
