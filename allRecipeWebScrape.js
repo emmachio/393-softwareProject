@@ -55,7 +55,7 @@ const recipeNames = await page.evaluate(() => {
 //BEGIN NEW CODE
 
 // Name can be shortened later, this is to lyk exactly what it does for now
-const returnsEachNameAndLink = await page.evaluate(() => {
+const returnsEachNameAndLinkAndImage = await page.evaluate(() => {
 
     const elements = document.querySelectorAll('a.mntl-card-list-items'); // Broaden to <a> selector for each recipe
 
@@ -71,7 +71,7 @@ const returnsEachNameAndLink = await page.evaluate(() => {
 // Loops through all elements and creates Recipe objects
 
 
-for (const {recipeName, recipeLink, imageSrc} of returnsEachNameAndLink) {
+for (const {recipeName, recipeLink, imageSrc} of returnsEachNameAndLinkAndImage) {
     await page.goto(recipeLink, {waitUntil: 'networkidle2'});
 
     const recipe = new Recipe(recipeName);
@@ -91,7 +91,7 @@ for (const {recipeName, recipeLink, imageSrc} of returnsEachNameAndLink) {
     console.log(`Recipe: ${recipe.name}`);
     console.log('Image Source: ', recipe.imageSrc);
     console.log('Ingredients:', recipe.ingredientsArray);
-    addNewJSONElement(recipe.name, recipeLink, recipe.ingredientsArray);
+    addNewJSONElement(recipe.name, recipeLink, recipe.ingredientsArray, recipe.imageSrc);
 }
 
 await browser.close();
@@ -100,7 +100,7 @@ await browser.close();
 //Function to add to JSON
 //first check for the last line of the json
 //then add {
-function addNewJSONElement (recipeName, recipeLink, ingredientsArray) {
+function addNewJSONElement (recipeName, recipeLink, ingredientsArray, imageLink) {
     fs.readFile("AllRecipes.json", "utf8", (err, data) => {
         if (err) {
             console.error("Error reading the JSON file:", err);
