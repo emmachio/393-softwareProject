@@ -1,12 +1,12 @@
 import puppeteer from 'puppeteer';
 //const fs = require('fs'); -> this line gives error
-import fs from 'fs';
-
+import fs from 'fs/promises';
 
 class Recipe {
     constructor(name) {
         this.name = name;
         //this.image = image;
+        this.imageSrc = '';
         this.ingredientsArray = [];
         this.recipeLink ="";
     }
@@ -59,16 +59,19 @@ const returnsEachNameAndLink = await page.evaluate(() => {
 
     const elements = document.querySelectorAll('a.mntl-card-list-items'); // Broaden to <a> selector for each recipe
 
-    return Array.from(elements).map(el => {
-        const recipeName = el.querySelector('div.card__content > span > span.card__title-text')?.textContent.trim(); // gets title in same way as before
-        const recipeLink = el.href; // grabs link from top of <a> header in html
-        return {recipeName, recipeLink};
-    });
+    return Array.from(elements).filter(el => !el.href.includes('/gallery/') && !el.classList.contains('card--square-image-left')) //filters only allow for recipes to be added
+        .map(el => {
+            const recipeName = el.querySelector('div.card__content > span > span.card__title-text')?.textContent.trim(); // gets title in same way as before
+            const recipeLink = el.href; // grabs link from top of <a> header in html
+            const imgElement = el.querySelector('div.loc.card__top > div.card__media > div > img');
+            const imageSrc = imgElement?.getAttribute('data-src') || imgElement?.src || null;
+            return {recipeName, recipeLink, imageSrc};
+        });
 });
 // Loops through all elements and creates Recipe objects
 
 
-for (const {recipeName, recipeLink} of returnsEachNameAndLink) {
+for (const {recipeName, recipeLink, imageSrc} of returnsEachNameAndLink) {
     await page.goto(recipeLink, {waitUntil: 'networkidle2'});
 
     const recipe = new Recipe(recipeName);
@@ -83,7 +86,10 @@ for (const {recipeName, recipeLink} of returnsEachNameAndLink) {
     // Adds ingredients to Recipe object
     ingredients.forEach(ingredient => recipe.addIngredient(ingredient));
 
+    recipe.imageSrc = imageSrc;
+
     console.log(`Recipe: ${recipe.name}`);
+    console.log('Image Source: ', recipe.imageSrc);
     console.log('Ingredients:', recipe.ingredientsArray);
     addNewJSONElement(recipe.name, recipeLink, recipe.ingredientsArray);
 }
@@ -137,7 +143,6 @@ export function findRecipesByIngredientsJani(userIngredients, recipesArray) {
     return matchingRecipes;
 }
 // module.exports={findRecipesByIngredientsJani}
-;
 
 // //END NEW CODE
 //
