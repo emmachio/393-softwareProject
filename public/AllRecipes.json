@@ -954,5 +954,69 @@
             "salt and ground white pepper to taste",
             "1 lemon, cut into wedges"
         ]
+    },
+    {
+        "recipeName": "18 Best Boneless Chicken Breast Recipes Ready in 30 Minutes or Less",
+        "recipeLink": "https://www.allrecipes.com/gallery/best-boneless-chicken-breast-recipes-ready-in-30-minutes-or-less/",
+        "ingredientsArray": []
+    },
+    {
+        "recipeName": "17 Easy 30-Minute Pork Dinners for Busy Weeknights",
+        "recipeLink": "https://www.allrecipes.com/30-minute-pork-recipes-8710475",
+        "ingredientsArray": []
+    },
+    {
+        "recipeName": "9 Ways to Do Dinner for One in 30 Minutes",
+        "recipeLink": "https://www.allrecipes.com/gallery/30-minute-dinners-for-one/",
+        "ingredientsArray": []
+    },
+    {
+        "recipeName": "18 Fancy Dinners Ready in 30 Minutes",
+        "recipeLink": "https://www.allrecipes.com/gallery/fancy-dinner-recipes/",
+        "ingredientsArray": []
+    },
+    {
+        "recipeName": "Homemade Spaghetti-O's",
+        "recipeLink": "https://www.allrecipes.com/homemade-spaghetti-o-s-recipe-8695137",
+        "ingredientsArray": [
+            "16 ounces ring-shaped pasta  (Anelli Siciliani)",
+            "30 ounces tomato sauce",
+            "1 tablespoon Cantanzaro herbs, (such as Savory Spice Shop® Cantanzaro herbs)",
+            "2 teaspoons white sugar",
+            "1 teaspoon salt, or to taste",
+            "1/2 teaspoon freshly ground black pepper",
+            "16 ounces Italian-style meatballs",
+            "1/2 cup freshly shaved Parmesan cheese, or as needed, for garnish",
+            "fresh basil, for garnish"
+        ]
+    },
+    {
+        "recipeName": "Homemade Pasta Roni",
+        "recipeLink": "https://www.allrecipes.com/recipe/8508776/homemade-pasta-roni/",
+        "ingredientsArray": [
+            "2 cups chicken broth",
+            "3 ounces angel hair pasta",
+            "1 tablespoon butter",
+            "1 clove garlic, minced",
+            "½ teaspoon Italian seasoning",
+            "¼ cup heavy cream",
+            "¾ cup finely shredded Parmesan cheese",
+            "1 teaspoon minced fresh parsley, or to taste"
+        ]
+    },
+    {
+        "recipeName": "Quick and Easy Pancit",
+        "recipeLink": "https://www.allrecipes.com/recipe/47015/quick-and-easy-pancit/",
+        "ingredientsArray": [
+            "1 (12 ounce) package dried rice noodles",
+            "1 teaspoon vegetable oil",
+            "1 onion, finely diced",
+            "3 cloves garlic, minced",
+            "2 cups diced cooked chicken breast meat",
+            "1 small head cabbage, thinly sliced",
+            "4 carrot, thinly sliced",
+            "¼ cup soy sauce",
+            "2 lemons - cut into wedges, for garnish"
+        ]
     }
 ]
