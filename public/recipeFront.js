@@ -1,4 +1,5 @@
-import { scrapeRecipes, findRecipesByIngredientsJani } from '~/Desktop/fall2024/JHEMCookbook/Scrapping[AllRecipe]Puppeteer.js';
+// import { scrapeRecipes, findRecipesByIngredientsJani } from '~/Desktop/fall2024/JHEMCookbook/allRecipeWebScrape.js';
+import { findRecipesByIngredientsJani } from '/Users/chio/Desktop/fall2024/JHEMCookbook/allRecipeWebScrape.js';
 
 console.log(findRecipesByIngredientsJani(userIngredients, recipesArray));
 document.addEventListener("DOMContentLoaded", () => {

@@ -21,9 +21,9 @@ jobs:
 
     # Step 3: Install dependencies
     - name: Install dependencies
-      run: npm install jasmine
+      run: cd testing
 
     # Step 4: Run Jasmine tests in the 'testing' folder
     - name: Run Jasmine tests
-      run: npx jasmine testing/spec/support/jasmineTestingSpec.js
+      run: npx jasmine ./testing/spec/jasmineTestingSpec.js
 
