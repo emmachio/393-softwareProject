@@ -8,6 +8,7 @@ class Recipe {
         this.name = name;
         //this.image = image;
         this.ingredientsArray = [];
+        this.recipeLink ="";
     }
     printRecipe() {
         //console.log(`Recipe: ${this.name}, Image URL: ${this.image}`);
@@ -17,18 +18,9 @@ class Recipe {
     addIngredient(ingredient) {
         this.ingredientsArray.push(ingredient);
     }
-    toJSON() {
-        return {
-            name: this.name,
-            ingredients: this.ingredientsArray
-        };
-    }
 }
 
 
-let recipeLink;
-let recipe = new Recipe();
-let ingredient;
 
 //makes it open
 // const browser = await puppeteer.launch({headless: false});
@@ -63,7 +55,7 @@ const recipeNames = await page.evaluate(() => {
 //BEGIN NEW CODE
 
 // Name can be shortened later, this is to lyk exactly what it does for now
-const recipeNameAndIngredients = await page.evaluate(() => {
+const returnsEachNameAndLink = await page.evaluate(() => {
 
     const elements = document.querySelectorAll('a.mntl-card-list-items'); // Broaden to <a> selector for each recipe
 
@@ -73,9 +65,10 @@ const recipeNameAndIngredients = await page.evaluate(() => {
         return {recipeName, recipeLink};
     });
 });
-
 // Loops through all elements and creates Recipe objects
-for (const {recipeName, recipeLink} of recipeNameAndIngredients) {
+
+
+for (const {recipeName, recipeLink} of returnsEachNameAndLink) {
     await page.goto(recipeLink, {waitUntil: 'networkidle2'});
 
     const recipe = new Recipe(recipeName);
@@ -92,13 +85,43 @@ for (const {recipeName, recipeLink} of recipeNameAndIngredients) {
 
     console.log(`Recipe: ${recipe.name}`);
     console.log('Ingredients:', recipe.ingredientsArray);
+    addNewJSONElement(recipe.name, recipeLink, recipe.ingredientsArray);
 }
 
 await browser.close();
 
 
+//Function to add to JSON
+//first check for the last line of the json
+//then add {
+function addNewJSONElement (recipeName, recipeLink, ingredientsArray) {
+    fs.readFile("AllRecipes.json", "utf8", (err, data) => {
+        if (err) {
+            console.error("Error reading the JSON file:", err);
+            return;
+        }
+        try {
+            const jsonData = JSON.parse(data);
 
+            const newRecipe = {
+                recipeName: recipeName,
+                recipeLink: recipeLink,
+                ingredientsArray: ingredientsArray
+            };
+            jsonData.push(newRecipe);
 
+            fs.writeFile("AllRecipes.json", JSON.stringify(jsonData, null, 4), "utf8", (err) => {
+                if (err) {
+                    console.error("Error writing to the JSON file", err);
+                } else {
+                    console.log("New recipe added successfully!");
+                }
+            });
+        } catch (parseError) {
+            console.error("Error parsing the JSON file", parseError);
+        }
+    });
+}
 //Jani's Search
 export function findRecipesByIngredientsJani(userIngredients, recipesArray) {
     // Filter recipes by user ingredients
@@ -146,10 +169,10 @@ export function findRecipesByIngredientsJani(userIngredients, recipesArray) {
 //    Recipe: Test Recipe, Image URL: https://example.com/image.jpg
 
 
-// const jsonFilePath = './recipes.json';
+// const jsonFilePath = './AllRecipes.json';
 //
 // (async () => {
-//     // Load existing recipes from recipes.json or initialize with an empty array
+//     // Load existing recipes from AllRecipes.json or initialize with an empty array
 //     let existingRecipes = [];
 //     if (fs.existsSync(jsonFilePath)) {
 //         const fileContent = fs.readFileSync(jsonFilePath, 'utf-8');
