@@ -42,7 +42,21 @@ function findRecipesByIngredients(ingredientsArray) {
 }
 
 
-const exampleIngredients = ["Flour", "Sugar", "Cocoa Powder", "Eggs", "Butter"];
+const exampleIngredients = [
+    "2 (14.75 ounce) cans salmon, drained and flaked",
+        "¾ cup Italian-seasoned panko (Japanese bread crumbs)",
+        "½ cup minced fresh parsley",
+        "2 eggs, beaten",
+        "2 green onions, chopped",
+        "3 tablespoons Worcestershire sauce",
+        "3 tablespoons grated Parmesan cheese",
+        "2 tablespoons Dijon mustard",
+        "2 tablespoons creamy salad dressing (such as Miracle Whip®)",
+        "2 teaspoons seafood seasoning (such as Old Bay®)",
+        "1 ½ teaspoons garlic powder",
+        "1 ½ teaspoons ground black pepper",
+        "1 tablespoon olive oil, or as needed, divided"
+    ];
 
 findRecipesByIngredients(exampleIngredients)
     .then(matchingRecipes => {
