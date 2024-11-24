@@ -1,3 +1,30 @@
+import fs from 'fs';
+
+// Path to the JSON file in your directory
+const filePath = './AllRecipes.json';
+console.log("reading JSOn");
+// Read the file
+fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+        console.error('Error reading JSON file:', err);
+        return;
+    }
+
+    try {
+        // Parse the JSON data
+        const array = JSON.parse(data);
+
+        console.log('Array from JSON:', array);
+
+        // Iterate through the array
+        array.forEach((item, index) => {
+            console.log(`Item ${index}:`, item);
+        });
+    } catch (parseError) {
+        console.error('Error parsing JSON:', parseError);
+    }
+});
+
 const { JSDOM } = require('jsdom');
 
 // Create a DOM-like environment
@@ -25,7 +52,7 @@ recipes.forEach(item => {
     // const img = document.querySelector('img');
     const img = document.createElement('img');
     img.width = 150;
-    img.height 150;
+    img.height = 150;
     img.src = item.image;
     img.alt='{$item.name}';
     link.appendChild(img);
