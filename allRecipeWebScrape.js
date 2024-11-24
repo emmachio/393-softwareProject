@@ -1,7 +1,6 @@
 import puppeteer from 'puppeteer';
 //const fs = require('fs'); -> this line gives error
-import fs from 'fs';
-
+import fs from 'fs/promises';
 
 class Recipe {
     constructor(name) {

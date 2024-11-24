@@ -1,48 +1,61 @@
-function findRecipeByIngredients(inputIngredients) {
-    // Read the JSON file
-    fs.readFile('AllRecipes.json', 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error reading the JSON file:', err);
-            return;
-        }
+import fs from 'fs/promises';
 
-        try {
-            // Parse the JSON data
-            const jsonData = JSON.parse(data);
+function findRecipesByIngredients(ingredientsArray) {
+    return new Promise((resolve, reject) => {
+        // Read the JSON file
+        console.log("did not make it in");
 
-            // Search for a matching recipe
-            const matchingRecipe = jsonData.find(item => {
-                // Check if the ingredients arrays match exactly
-                return (
-                    Array.isArray(item.ingredientsArray) &&
-                    item.ingredientsArray.length === inputIngredients.length &&
-                    item.ingredientsArray.every((ing, index) => ing === inputIngredients[index])
-                );
-            });
+        fs.readFile('AllRecipes.json', 'utf8', (err, data) => {
 
-            if (matchingRecipe) {
-                // Create a new Recipe object for the match
-                const recipe = new Recipe(matchingRecipe.recipeName);
-                recipe.setLink(matchingRecipe.recipeLink);
-
-                matchingRecipe.ingredientsArray.forEach(ingredient =>
-                    recipe.addIngredient(ingredient)
-                );
-
-                console.log('Matching Recipe Found:');
-                console.log(`Recipe Name: ${recipe.name}`);
-                console.log(`Recipe Link: ${recipe.link}`);
-                console.log('Ingredients:', recipe.ingredientsArray);
-
-                return recipe; // Return the Recipe object if needed
-            } else {
-                console.log('No matching recipe found.');
+            if (err) {
+                console.error('Error reading the JSON file:', err);
+                reject(err);
+                return;
             }
-        } catch (parseError) {
-            console.error('Error parsing the JSON file:', parseError);
-        }
+
+            try {
+                // Parse the JSON data
+                const jsonData = JSON.parse(data);
+
+                // Array to store matching Recipe objects
+                const matchingRecipes = [];
+
+                // Iterate through each recipe in the JSON file
+                jsonData.forEach(item => {
+                    // Check if the ingredients match exactly
+                    if (JSON.stringify(item.ingredientsArray) === JSON.stringify(ingredientsArray)) {
+                        const recipe = new Recipe(item.recipeName);
+                        recipe.setLink(item.recipeLink);
+                        item.ingredientsArray.forEach(ingredient => recipe.addIngredient(ingredient));
+                        matchingRecipes.push(recipe);
+                    }
+                });
+
+                // Resolve the matching recipes array
+                resolve(matchingRecipes);
+            } catch (parseError) {
+                console.error('Error parsing the JSON file:', parseError);
+                reject(parseError);
+            }
+        });
     });
 }
 
-findRecipeByIngredients(["Flour", "Sugar", "Cocoa Powder", "Eggs", "Butter"]);
 
+const exampleIngredients = ["Flour", "Sugar", "Cocoa Powder", "Eggs", "Butter"];
+
+findRecipesByIngredients(exampleIngredients)
+    .then(matchingRecipes => {
+        if (matchingRecipes.length > 0) {
+            console.log('Matching Recipes:');
+            matchingRecipes.forEach(recipe => {
+                console.log(`Recipe Name: ${recipe.name}`);
+                console.log(`Recipe Link: ${recipe.link}`);
+                console.log('Ingredients:', recipe.ingredientsArray);
+                console.log('----------------------');
+            });
+        } else {
+            console.log('No matching recipes found.');
+        }
+    })
+    .catch(err => console.error('Error:', err));
