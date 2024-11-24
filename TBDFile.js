@@ -20,7 +20,6 @@ class Recipe {
 
 async function findRecipesByIngredients(ingredientsArray) {
     try {
-        console.log("did not make it in");
 
         // Read the JSON file asynchronously
         const data = await fs.readFile('AllRecipes.json', 'utf8');
