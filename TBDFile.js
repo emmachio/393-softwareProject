@@ -50,7 +50,7 @@ class Recipe {
 //     }
 // }
 
-export async function findRecipesByIngredientsNew(ingredientsArray, pathway ='./AllRecipes.json' ) {
+async function findRecipesByIngredientsNew(ingredientsArray, pathway ='./AllRecipes.json' ) {
     try {
         // Read the JSON file asynchronously
         const data = await fs.readFile(pathway, 'utf8');
@@ -87,7 +87,33 @@ export async function findRecipesByIngredientsNew(ingredientsArray, pathway ='./
         throw error; // Propagate the error
     }
 }
+export async function resultJSON(exampleIngredientsNew, pathway){
+    try {
+        // Clear the file by overwriting it with an empty array
+        await fs.writeFile('./results.JSON', JSON.stringify([], null, 2), 'utf8');
+        console.log('JSON file cleared.');
 
+        // Add the new data to the empty array
+        const recipes = await findRecipesByIngredientsNew(exampleIngredientsNew, pathway);
+
+        // Write the updated data to the JSON file
+        const jsonData = [];
+        recipes.forEach(item => {
+            // Create a new recipe object
+            const newRecipe = {
+                name: item.name,
+                link: item.link,
+                ingredientsArray: item.ingredients,
+                imgSrc: item.imgSrc
+            };
+            jsonData.push(newRecipe)
+        });
+        await fs.writeFile('./results.JSON', JSON.stringify(jsonData, null, 2), 'utf8');
+        console.log('New data added to JSON file.');
+    } catch (error) {
+        console.error('Error updating JSON file:', error);
+    }
+}
 
 const exampleIngredients = [
     "2 (14.75 ounce) cans salmon, drained and flaked",
@@ -185,3 +211,5 @@ const exampleIngredientsNew = [
 // const recipes = await findRecipesByIngredientsNew(exampleIngredientsNew);
 // console.log(recipes); // Logs the array of recipes
 // })();
+// Emma(exampleIngredientsNew)
+resultJSON(exampleIngredientsNew, './AllRecipes.json');
