@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 // const filePath = '~/Desktop/fall2024/JHEMCookbook/AllRecipes.json';
 // console.log("reading JSOn");
 // // Read the file
-// fs.readFile(filePath, 'utf8', (err, data) => {
+// fs.readFile(filePath, 'utf8', (err, data)) => {
 //     if (err) {
 //         console.error('Error reading JSON file:', err);
 //         return;

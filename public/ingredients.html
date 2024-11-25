@@ -32,6 +32,12 @@
             margin-bottom: 10px;
         }
 
+        label[for=searchResult] {
+            font-family: Lucida-Console, monospace;
+            font-size: 0.775em;
+            margin-bottom: 10px;
+        }
+
         .ingredientsSearch {
             position: relative;
             top: 20px;
@@ -120,6 +126,9 @@
                 <input type="text" id="ingredients" name="ingredients" placeholder="add ingredients"><br>
             </form>
 
+            <label for="searchResult">Results:</label><br>
+                <ul id="searchList"></ul>
+
         </div>
         <div class="column2">
             <div class="widgetContainer">
@@ -140,26 +149,7 @@
 </main>
 
 
-<script src="script.js">
-    document.querySelector('.ingredientsSearch').addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        const searchBar = document.getElementById('ingredients');
-        const query = searchBar.value.trim();
-
-        if (query) {
-            fetch('/save-search', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query: query })
-            }).then(response => response.json()).then(data => {
-                console.log(data);
-                // Redirect to search history page after saving
-                window.location.href = '/search_history';
-            });
-        }
-    });
-</script>
+<script type="module" src="script.js"></script>
 
 
 

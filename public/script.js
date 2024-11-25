@@ -21,3 +21,41 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
       console.log("Search saved to history.");
   }
 });
+
+// Import the function from recipes.js
+import { findRecipesByIngredientsJani } from './recipes.js';
+
+// Example recipes array (you can replace it with your actual recipe data)
+const recipesArray = [
+    { name: 'Pasta', ingredientsArray: ['flour', 'egg', 'water', 'salt'] },
+    { name: 'Tomato Soup', ingredientsArray: ['tomato', 'salt', 'water'] },
+    { name: 'Pancakes', ingredientsArray: ['flour', 'egg', 'milk', 'sugar'] }
+];
+
+// Get the input field and result section
+const ingredientsInput = document.getElementById('ingredients');
+const searchForm = document.getElementById('searchForm');
+const searchList = document.getElementById('searchList');
+
+// Event listener for form submission
+searchForm.addEventListener('submit', function(event) {
+    event.preventDefault();  // Prevent the form from submitting
+
+    const userIngredients = ingredientsInput.value.split(',').map(ingredient => ingredient.trim());
+
+    // Call the imported function to get matching recipes
+    const matchingRecipes = findRecipesByIngredientsJani(userIngredients, recipesArray);
+
+    // Clear the search list
+    searchList.innerHTML = '';
+
+    // Display the matching recipes below the result section
+    matchingRecipes.forEach(recipe => {
+        const listItem = document.createElement('li');
+        listItem.textContent = recipe.name;  // Assuming the recipe object has a 'name' property
+        searchList.appendChild(listItem);
+    });
+
+    // Clear the input field after searching
+    ingredientsInput.value = '';
+});
