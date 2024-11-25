@@ -108,7 +108,35 @@ function addNewJSONElement (recipeName, recipeLink, ingredientsArray, imgSrc) {
             console.error("Error reading the JSON file:", err);
             return;
         }
-        try {
+        try {function addNewJSONElement (recipeName, recipeLink, ingredientsArray, imgSrc) {
+            fs.readFile("AllRecipes.json", "utf8", (err, data) => {
+                if (err) {
+                    console.error("Error reading the JSON file:", err);
+                    return;
+                }
+                try {
+                    const jsonData = JSON.parse(data);
+
+                    const newRecipe = {
+                        recipeName: recipeName,
+                        recipeLink: recipeLink,
+                        ingredientsArray: ingredientsArray,
+                        imgSrc: imgSrc
+                    };
+                    jsonData.push(newRecipe);
+
+                    fs.writeFile("AllRecipes.json", JSON.stringify(jsonData, null, 4), "utf8", (err) => {
+                        if (err) {
+                            console.error("Error writing to the JSON file", err);
+                        } else {
+                            console.log("New recipe added successfully!");
+                        }
+                    });
+                } catch (parseError) {
+                    console.error("Error parsing the JSON file", parseError);
+                }
+            });
+        }
             const jsonData = JSON.parse(data);
 
             const newRecipe = {
