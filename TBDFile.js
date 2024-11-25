@@ -17,9 +17,6 @@ class Recipe {
     }
 }
 
-
-
-
 export async function findRecipesByIngredients(ingredientsArray) {
     try {
         // Read the JSON file asynchronously
@@ -130,9 +127,6 @@ const exampleIngredientsNew = [
     "soy sauce",
     "sesame seeds"
 ];
-
-
-
 
 findRecipesByIngredients(exampleIngredientsNew)
     .then(matchingRecipes => {
