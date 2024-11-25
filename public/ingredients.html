@@ -36,9 +36,16 @@
             font-family: Lucida-Console, monospace;
             font-size: 0.775em;
             margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
         }
 
-        .ingredientsSearch {
+        .resultsSection {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .ingredientsSearch{
             position: relative;
             top: 20px;
             text-align: left;
@@ -124,12 +131,12 @@
             <form class="ingredientsSearch" id="searchForm">
                 <label for="ingredients">Ingredients:</label><br>
                 <input type="text" id="ingredients" name="ingredients" placeholder="add ingredients"><br>
-            </form>
 
-            <label for="searchResult">Results:</label><br>
+                <label for="searchResult">Results:</label><br>
                 <ul id="searchList"></ul>
-
+            </form>
         </div>
+
         <div class="column2">
             <div class="widgetContainer">
 <!--                dynamically adding recipe results onto the website-->

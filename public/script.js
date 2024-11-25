@@ -20,10 +20,13 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
       // Optional: Log a confirmation message
       console.log("Search saved to history.");
   }
+
+  // After submitting, also trigger the recipe filtering function
+  filterRecipesByIngredients(); 
 });
 
 // Import the function from recipes.js
-import { findRecipesByIngredientsJani } from './recipes.js';
+//import { findRecipesByIngredientsJani } from './allRecipeWebScrape.js';
 
 // Example recipes array (you can replace it with your actual recipe data)
 const recipesArray = [
@@ -34,28 +37,31 @@ const recipesArray = [
 
 // Get the input field and result section
 const ingredientsInput = document.getElementById('ingredients');
-const searchForm = document.getElementById('searchForm');
 const searchList = document.getElementById('searchList');
 
-// Event listener for form submission
-searchForm.addEventListener('submit', function(event) {
-    event.preventDefault();  // Prevent the form from submitting
+// Function to filter recipes based on the input
+function filterRecipesByIngredients() {
+  const userIngredients = ingredientsInput.value.toLowerCase().split(',').map(item => item.trim());
 
-    const userIngredients = ingredientsInput.value.split(',').map(ingredient => ingredient.trim());
+  // Filter recipes based on the user input
+  const filteredRecipes = recipesArray.filter(recipe =>
+      userIngredients.every(userIngredient =>
+          recipe.ingredientsArray.some(recipeIngredient =>
+              recipeIngredient.toLowerCase().includes(userIngredient)
+          )
+      )
+  );
 
-    // Call the imported function to get matching recipes
-    const matchingRecipes = findRecipesByIngredientsJani(userIngredients, recipesArray);
+  // Clear the previous results
+  searchList.innerHTML = '';
 
-    // Clear the search list
-    searchList.innerHTML = '';
+  // Display the filtered results
+  filteredRecipes.forEach(recipe => {
+      const listItem = document.createElement('li');
+      listItem.textContent = recipe.name; // Display recipe name
+      searchList.appendChild(listItem);
+  });
+}
 
-    // Display the matching recipes below the result section
-    matchingRecipes.forEach(recipe => {
-        const listItem = document.createElement('li');
-        listItem.textContent = recipe.name;  // Assuming the recipe object has a 'name' property
-        searchList.appendChild(listItem);
-    });
-
-    // Clear the input field after searching
-    ingredientsInput.value = '';
-});
+// Add event listener to the ingredients input field
+ingredientsInput.addEventListener('input', filterRecipesByIngredients);
