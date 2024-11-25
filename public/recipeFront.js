@@ -1,78 +1,61 @@
-import {findRecipesByIngredientsNew} from './TBDFile.js';
-
+// imgFakeLink = 'https://walnuts.wpenginepowered.com/wp-content/uploads/2024/10/CWC-S0295-OnionRings_1500x1000-900x600.jpg';
 document.addEventListener("DOMContentLoaded", async () => {
     // Path to the JSON file
-    // const jsonFilePath = '../AllRecipes.json';
-    // // console.log('working');
-    // try {
-    //     // Fetch the JSON file and parse it
-    //     const response = await fetch(jsonFilePath);
-    //     if (!response.ok) {
-    //         throw new Error('Failed to fetch recipes JSON file');
-    //     }
-    //     const recipes = await response.json();
-    //
-    //     console.log('Recipes from JSON:', recipes);
-    const exampleIngredients = [
-        "2 (14.75 ounce) cans salmon, drained and flaked",
-        "¾ cup Italian-seasoned panko (Japanese bread crumbs)",
-        "½ cup minced fresh parsley",
-        "2 eggs, beaten",
-        "2 green onions, chopped",
-        "3 tablespoons Worcestershire sauce",
-        "3 tablespoons grated Parmesan cheese",
-        "2 tablespoons Dijon mustard",
-        "2 tablespoons creamy salad dressing (such as Miracle Whip®)",
-        "2 teaspoons seafood seasoning (such as Old Bay®)",
-        "1 ½ teaspoons garlic powder",
-        "1 ½ teaspoons ground black pepper",
-        "1 tablespoon olive oil, or as needed, divided"
-    ];
+    const jsonFilePath = '../AllRecipes.json';
+    // console.log('working');
+    try {
+        // Fetch the JSON file and parse it
+        const response = await fetch(jsonFilePath);
+        if (!response.ok) {
+            throw new Error('Failed to fetch recipes JSON file');
+        }
+        const recipes = await response.json();
 
-    // Output container
-    const outputDiv = document.getElementById('output');
-    const recipes = findRecipesByIngredientsNew(exampleIngredients);
-    console.log(recipes)
-    if (outputDiv) {
-        // Iterate through the recipes array
-        recipes.forEach(item => {
-            // Create recipe widget container
-            const individualRecipe = document.createElement('div');
-            individualRecipe.classList.add('recipeWidget');
+        console.log('Recipes from JSON:', recipes);
 
-            // Create the link for the image
-            const link = document.createElement('a');
-            link.href = item.recipeLink;
+        // Output container
+        const outputDiv = document.getElementById('output');
 
-            // Create the image element
-            const img = document.createElement('img');
-            // img.src = imgFakeLink; // Set image source
-            img.src = item.imgSrc; // Set image source
-            img.alt = `${item.recipeName}`; // Use recipe name as alt text
-            img.style.borderRadius = '15px'; // Curved edges
-            link.appendChild(img); // Append image to the link
+        if (outputDiv) {
+            // Iterate through the recipes array
+            recipes.forEach(item => {
+                // Create recipe widget container
+                const individualRecipe = document.createElement('div');
+                individualRecipe.classList.add('recipeWidget');
 
-            // Append the link to the recipe widget
-            individualRecipe.appendChild(link);
+                // Create the link for the image
+                const link = document.createElement('a');
+                link.href = item.recipeLink;
 
-            // Add text below the image
-            const text = document.createElement('p');
-            text.textContent = `${item.recipeName}`;
-            individualRecipe.appendChild(text);
+                // Create the image element
+                const img = document.createElement('img');
+                // img.src = imgFakeLink; // Set image source
+                img.src = item.imgSrc; // Set image source
+                img.alt = `${item.recipeName}`; // Use recipe name as alt text
+                img.style.borderRadius = '15px'; // Curved edges
+                link.appendChild(img); // Append image to the link
 
-            // Append the widget to the container
-            const widgetContainer = document.querySelector('.widgetContainer');
-            widgetContainer.appendChild(individualRecipe);
+                // Append the link to the recipe widget
+                individualRecipe.appendChild(link);
 
-            // Debugging output
-            console.log(individualRecipe.outerHTML);
-        });
-    } else {
-        console.error('Output div not found');
+                // Add text below the image
+                const text = document.createElement('p');
+                text.textContent = `${item.recipeName}`;
+                individualRecipe.appendChild(text);
+
+                // Append the widget to the container
+                const widgetContainer = document.querySelector('.widgetContainer');
+                widgetContainer.appendChild(individualRecipe);
+
+                // Debugging output
+                console.log(individualRecipe.outerHTML);
+            });
+        } else {
+            console.error('Output div not found');
+        }
+    } catch (error) {
+        console.error('Error loading recipes:', error);
     }
-    // } catch (error) {
-    //     console.error('Error loading recipes:', error);
-    // }
 });
 
 // import fs from 'fs';
