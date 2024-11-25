@@ -18,34 +18,34 @@ class Recipe {
 }
 
 
-// async function findRecipesByIngredients(ingredientsArray) {
-//     try {
-//
-//         // Read the JSON file asynchronously
-//         const data = await fs.readFile('AllRecipes.json', 'utf8');
-//         const jsonData = JSON.parse(data);
-//
-//         const matchingRecipes = [];
-//
-//         // Iterate through each recipe in the JSON data
-//         jsonData.forEach(item => {
-//             // Check if the ingredients match exactly
-//             if (JSON.stringify(item.ingredientsArray) === JSON.stringify(ingredientsArray)) {
-//                 const recipe = new Recipe(item.recipeName);
-//                 recipe.setLink(item.recipeLink);
-//                 item.ingredientsArray.forEach(ingredient => recipe.addIngredient(ingredient));
-//                 matchingRecipes.push(recipe);
-//             }
-//         });
-//
-//         return matchingRecipes; // Resolve with matching recipes
-//     } catch (error) {
-//         console.error('Error in findRecipesByIngredients:', error);
-//         throw error; // Reject the promise with the error
-//     }
-// }
-
 async function findRecipesByIngredients(ingredientsArray) {
+    try {
+
+        // Read the JSON file asynchronously
+        const data = await fs.readFile('AllRecipes.json', 'utf8');
+        const jsonData = JSON.parse(data);
+
+        const matchingRecipes = [];
+
+        // Iterate through each recipe in the JSON data
+        jsonData.forEach(item => {
+            // Check if the ingredients match exactly
+            if (JSON.stringify(item.ingredientsArray) === JSON.stringify(ingredientsArray)) {
+                const recipe = new Recipe(item.recipeName);
+                recipe.setLink(item.recipeLink);
+                item.ingredientsArray.forEach(ingredient => recipe.addIngredient(ingredient));
+                matchingRecipes.push(recipe);
+            }
+        });
+
+        return matchingRecipes; // Resolve with matching recipes
+    } catch (error) {
+        console.error('Error in findRecipesByIngredients:', error);
+        throw error; // Reject the promise with the error
+    }
+}
+
+async function findRecipesByIngredientsNew(ingredientsArray) {
     try {
         // Read the JSON file asynchronously
         const data = await fs.promises.readFile('AllRecipes.json', 'utf8');
