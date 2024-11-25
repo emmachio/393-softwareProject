@@ -18,7 +18,7 @@ class Recipe {
 }
 
 
-export async function findRecipesByIngredients(ingredientsArray) {
+async function findRecipesByIngredients(ingredientsArray) {
     try {
         // Read the JSON file asynchronously
         const data = await fs.readFile('AllRecipes.json', 'utf8')
@@ -53,7 +53,7 @@ export async function findRecipesByIngredients(ingredientsArray) {
 export async function findRecipesByIngredientsNew(ingredientsArray) {
     try {
         // Read the JSON file asynchronously
-        const data = await fs.readFile('../AllRecipes.json', 'utf8');
+        const data = await fs.readFile('./AllRecipes.json', 'utf8');
         const jsonData = JSON.parse(data);
 
         const matchingRecipes = [];
@@ -127,7 +127,7 @@ const exampleIngredientsNew = [
     "minced garlic",
     "soy sauce",
     "sesame seeds"
-];
+]
 
 
 
@@ -164,7 +164,6 @@ const exampleIngredientsNew = [
 //         }
 //     })
 //     .catch(err => console.error('Error:', err));
-=======
 findRecipesByIngredients(exampleIngredientsNew)
     .then(matchingRecipes => {
         if (matchingRecipes.length > 0) {
@@ -180,7 +179,6 @@ findRecipesByIngredients(exampleIngredientsNew)
         }
     })
     .catch(err => console.error('Error:', err));
->>>>>>> 11ac3224d41a6cf32c78fa1071fcf59e6a40d991
 
 // (async () => {
 //     const ingredients = ["salmon", "panko", "eggs"];
