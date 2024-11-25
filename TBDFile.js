@@ -174,22 +174,24 @@ const exampleIngredientsNew = [
 //     })
 //     .catch(err => console.error('Error:', err));
 //
-// findRecipesByIngredientsNew(exampleIngredientsNew)
-//     .then(matchingRecipes => {
-//         if (matchingRecipes.length > 0) {
-//             console.log('Matching Recipes New:');
-//             matchingRecipes.forEach(recipe => {
-//                 console.log(`Recipe Name: ${recipe.name}`);
-//                 console.log(`Recipe Link: ${recipe.link}`);
-//                 console.log('Ingredients:', recipe.ingredientsArray);
-//                 console.log("Recipe Image Link", recipe.imgSrc);
-//                 console.log('----------------------');
-//             });
-//         } else {
-//             console.log('No matching recipes found.');
-//         }
-//     })
-//     .catch(err => console.error('Error:', err));
+findRecipesByIngredientsNew(exampleIngredientsNew)
+    .then(matchingRecipes => {
+        if (matchingRecipes.length > 0) {
+            console.log('Matching Recipes New:');
+            matchingRecipes.forEach(recipe => {
+                console.log(`Recipe Name: ${recipe.name}`);
+                console.log(`Recipe Link: ${recipe.link}`);
+                console.log('Ingredients:', recipe.ingredientsArray);
+                console.log("Recipe Image Link", recipe.imgSrc);
+                console.log('----------------------');
+            });
+        } else {
+            console.log('No matching recipes found.');
+        }
+    })
+    .catch(err => console.error('Error:', err));
+
+
 // findRecipesByIngredients(exampleIngredientsNew)
 //     .then(matchingRecipes => {
 //         if (matchingRecipes.length > 0) {
