@@ -53,7 +53,7 @@ async function findRecipesByIngredients(ingredientsArray) {
 export async function findRecipesByIngredientsNew(ingredientsArray) {
     try {
         // Read the JSON file asynchronously
-        const data = await fs.readFile('./AllRecipes.json', 'utf8');
+        const data = await fs.readFile('../AllRecipes.json', 'utf8');
         const jsonData = JSON.parse(data);
 
         const matchingRecipes = [];
@@ -164,24 +164,24 @@ const exampleIngredientsNew = [
 //         }
 //     })
 //     .catch(err => console.error('Error:', err));
-findRecipesByIngredients(exampleIngredientsNew)
-    .then(matchingRecipes => {
-        if (matchingRecipes.length > 0) {
-            console.log('Matching Recipes:');
-            matchingRecipes.forEach(recipe => {
-                console.log(`Recipe Name: ${recipe.name}`);
-                console.log(`Recipe Link: ${recipe.link}`);
-                console.log('Ingredients:', recipe.ingredientsArray);
-                console.log('----------------------');
-            });
-        } else {
-            console.log('No matching recipes found.');
-        }
-    })
-    .catch(err => console.error('Error:', err));
+// findRecipesByIngredients(exampleIngredientsNew)
+//     .then(matchingRecipes => {
+//         if (matchingRecipes.length > 0) {
+//             console.log('Matching Recipes:');
+//             matchingRecipes.forEach(recipe => {
+//                 console.log(`Recipe Name: ${recipe.name}`);
+//                 console.log(`Recipe Link: ${recipe.link}`);
+//                 console.log('Ingredients:', recipe.ingredientsArray);
+//                 console.log('----------------------');
+//             });
+//         } else {
+//             console.log('No matching recipes found.');
+//         }
+//     })
+//     .catch(err => console.error('Error:', err));
 
 // (async () => {
 //     const ingredients = ["salmon", "panko", "eggs"];
-const recipes = await findRecipesByIngredientsNew(exampleIngredientsNew);
-console.log(recipes); // Logs the array of recipes
+// const recipes = await findRecipesByIngredientsNew(exampleIngredientsNew);
+// console.log(recipes); // Logs the array of recipes
 // })();
