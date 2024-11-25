@@ -1,11 +1,11 @@
 import fs from 'fs/promises';
 
-
 class Recipe {
-    constructor(name) {
+    constructor(name, imgSrc = null) {
         this.name = name;
         this.link = null;
         this.ingredientsArray = [];
+        this.imgSrc = imgSrc; // Initialize imgSrc with the provided value or null
     }
 
     setLink(link) {
@@ -18,34 +18,9 @@ class Recipe {
 }
 
 
+
+
 export async function findRecipesByIngredients(ingredientsArray) {
-    try {
-
-        // Read the JSON file asynchronously
-        const data = await fs.readFile('AllRecipes.json', 'utf8');
-        const jsonData = JSON.parse(data);
-
-        const matchingRecipes = [];
-
-        // Iterate through each recipe in the JSON data
-        jsonData.forEach(item => {
-            // Check if the ingredients match exactly
-            if (JSON.stringify(item.ingredientsArray) === JSON.stringify(ingredientsArray)) {
-                const recipe = new Recipe(item.recipeName);
-                recipe.setLink(item.recipeLink);
-                item.ingredientsArray.forEach(ingredient => recipe.addIngredient(ingredient));
-                matchingRecipes.push(recipe);
-            }
-        });
-
-        return matchingRecipes; // Resolve with matching recipes
-    } catch (error) {
-        console.error('Error in findRecipesByIngredients:', error);
-        throw error; // Reject the promise with the error
-    }
-}
-
-export async function findRecipesByIngredientsNew(ingredientsArray) {
     try {
         // Read the JSON file asynchronously
         const data = await fs.readFile('AllRecipes.json', 'utf8')
@@ -77,6 +52,45 @@ export async function findRecipesByIngredientsNew(ingredientsArray) {
     }
 }
 
+export async function findRecipesByIngredientsNew(ingredientsArray) {
+    try {
+        // Read the JSON file asynchronously
+        const data = await fs.readFile('AllRecipes.json', 'utf8');
+        const jsonData = JSON.parse(data);
+
+        const matchingRecipes = [];
+
+        // Iterate through each recipe in the JSON data
+        jsonData.forEach(item => {
+            // Check if all ingredients required for the recipe are present in the user's available ingredients
+            const canMakeRecipe = item.ingredientsArray.every(recipeIngredient =>
+                ingredientsArray.some(inputIngredient =>
+                    inputIngredient.toLowerCase().includes(recipeIngredient.toLowerCase()) ||
+                    recipeIngredient.toLowerCase().includes(inputIngredient.toLowerCase())
+                )
+            );
+
+            if (canMakeRecipe) {
+                // Create a new Recipe instance, passing the name and imgSrc
+                const recipe = new Recipe(item.recipeName, item.imgSrc);
+                recipe.setLink(item.recipeLink);
+
+                // Add ingredients to the recipe
+                item.ingredientsArray.forEach(ingredient => recipe.addIngredient(ingredient));
+
+                // Add the recipe to the results array
+                matchingRecipes.push(recipe);
+            }
+        });
+
+        return matchingRecipes; // Return the recipes that can be made
+    } catch (error) {
+        console.error('Error in findRecipesByIngredients:', error);
+        throw error; // Propagate the error
+    }
+}
+
+
 const exampleIngredients = [
     "2 (14.75 ounce) cans salmon, drained and flaked",
     "¾ cup Italian-seasoned panko (Japanese bread crumbs)",
@@ -105,13 +119,22 @@ const exampleIngredientsNew = [
     "seafood seasoning)",
     "garlic powder",
     "black pepper",
-    "olive oil"
+    "olive oil",
+    "vegetable oil",
+    "beef sirloin",
+    "fresh broccoli florets",
+    "bell pepper",
+    "2 carrots",
+    "green onion",
+    "minced garlic",
+    "soy sauce",
+    "sesame seeds"
 ];
 
 
 
 
-findRecipesByIngredients(exampleIngredients)
+findRecipesByIngredients(exampleIngredientsNew)
     .then(matchingRecipes => {
         if (matchingRecipes.length > 0) {
             console.log('Matching Recipes:');
@@ -127,7 +150,7 @@ findRecipesByIngredients(exampleIngredients)
     })
     .catch(err => console.error('Error:', err));
 
-findRecipesByIngredientsNew(exampleIngredients)
+findRecipesByIngredientsNew(exampleIngredientsNew)
     .then(matchingRecipes => {
         if (matchingRecipes.length > 0) {
             console.log('Matching Recipes New:');
@@ -135,6 +158,7 @@ findRecipesByIngredientsNew(exampleIngredients)
                 console.log(`Recipe Name: ${recipe.name}`);
                 console.log(`Recipe Link: ${recipe.link}`);
                 console.log('Ingredients:', recipe.ingredientsArray);
+                console.log("Recipe Image Link", recipe.imgSrc);
                 console.log('----------------------');
             });
         } else {
