@@ -18,9 +18,7 @@ class Recipe {
 }
 
 
-
-
-async function findRecipesByIngredients(ingredientsArray) {
+export async function findRecipesByIngredients(ingredientsArray) {
     try {
         // Read the JSON file asynchronously
         const data = await fs.readFile('AllRecipes.json', 'utf8')
@@ -166,6 +164,23 @@ const exampleIngredientsNew = [
 //         }
 //     })
 //     .catch(err => console.error('Error:', err));
+=======
+findRecipesByIngredients(exampleIngredientsNew)
+    .then(matchingRecipes => {
+        if (matchingRecipes.length > 0) {
+            console.log('Matching Recipes:');
+            matchingRecipes.forEach(recipe => {
+                console.log(`Recipe Name: ${recipe.name}`);
+                console.log(`Recipe Link: ${recipe.link}`);
+                console.log('Ingredients:', recipe.ingredientsArray);
+                console.log('----------------------');
+            });
+        } else {
+            console.log('No matching recipes found.');
+        }
+    })
+    .catch(err => console.error('Error:', err));
+>>>>>>> 11ac3224d41a6cf32c78fa1071fcf59e6a40d991
 
 // (async () => {
 //     const ingredients = ["salmon", "panko", "eggs"];
