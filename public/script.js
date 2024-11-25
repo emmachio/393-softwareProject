@@ -19,10 +19,11 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
 
       // Optional: Log a confirmation message
       console.log("Search saved to history.");
+      console.log(searchList);
   }
 
   // After submitting, also trigger the recipe filtering function
-  filterRecipesByIngredients(); 
+  //filterRecipesByIngredients(); 
 });
 
 // Import the function from recipes.js
@@ -54,15 +55,15 @@ function displayInputInResults() {
   // Append each ingredient to the list
   userIngredients.forEach(ingredient => {
     const listItem = document.createElement('li');
-    listItem.classList.add('historyItem');
     listItem.textContent = `Your Ingredient: ${ingredient}`;
     searchList.appendChild(listItem);
 });
 }
+console.log(searchList);
 
 // Add event listener to the ingredients input field
 // Event listener for the input field
-/*ingredientsInput.addEventListener('input', function () {
+ingredientsInput.addEventListener('input', function () {
     // Get the current value from the input field
     const currentValue = ingredientsInput.value.trim();
 
@@ -79,15 +80,6 @@ function displayInputInResults() {
             const listItem = document.createElement('li');
             listItem.textContent = currentValue;
             searchList.appendChild(listItem);
-
-            ingredientsInput.value = ingredientsArray;
         }
     }
 });
-searchHistory.forEach(query => {
-    const listItem = document.createElement('li');
-    listItem.classList.add('historyItem');
-    listItem.textContent = query;
-    historyList.appendChild(listItem);
-});
-*/
