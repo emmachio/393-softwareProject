@@ -20,7 +20,7 @@ class Recipe {
 
 
 
-export async function findRecipesByIngredients(ingredientsArray) {
+async function findRecipesByIngredients(ingredientsArray) {
     try {
         // Read the JSON file asynchronously
         const data = await fs.readFile('AllRecipes.json', 'utf8')
@@ -55,7 +55,7 @@ export async function findRecipesByIngredients(ingredientsArray) {
 export async function findRecipesByIngredientsNew(ingredientsArray) {
     try {
         // Read the JSON file asynchronously
-        const data = await fs.readFile('AllRecipes.json', 'utf8');
+        const data = await fs.readFile('../AllRecipes.json', 'utf8');
         const jsonData = JSON.parse(data);
 
         const matchingRecipes = [];
@@ -82,7 +82,7 @@ export async function findRecipesByIngredientsNew(ingredientsArray) {
                 matchingRecipes.push(recipe);
             }
         });
-
+        // console.log(matchingRecipes)
         return matchingRecipes; // Return the recipes that can be made
     } catch (error) {
         console.error('Error in findRecipesByIngredients:', error);
@@ -134,35 +134,41 @@ const exampleIngredientsNew = [
 
 
 
-findRecipesByIngredients(exampleIngredientsNew)
-    .then(matchingRecipes => {
-        if (matchingRecipes.length > 0) {
-            console.log('Matching Recipes:');
-            matchingRecipes.forEach(recipe => {
-                console.log(`Recipe Name: ${recipe.name}`);
-                console.log(`Recipe Link: ${recipe.link}`);
-                console.log('Ingredients:', recipe.ingredientsArray);
-                console.log('----------------------');
-            });
-        } else {
-            console.log('No matching recipes found.');
-        }
-    })
-    .catch(err => console.error('Error:', err));
+// findRecipesByIngredients(exampleIngredientsNew)
+//     .then(matchingRecipes => {
+//         if (matchingRecipes.length > 0) {
+//             console.log('Matching Recipes:');
+//             matchingRecipes.forEach(recipe => {
+//                 console.log(`Recipe Name: ${recipe.name}`);
+//                 console.log(`Recipe Link: ${recipe.link}`);
+//                 console.log('Ingredients:', recipe.ingredientsArray);
+//                 console.log('----------------------');
+//             });
+//         } else {
+//             console.log('No matching recipes found.');
+//         }
+//     })
+//     .catch(err => console.error('Error:', err));
+//
+// findRecipesByIngredientsNew(exampleIngredientsNew)
+//     .then(matchingRecipes => {
+//         if (matchingRecipes.length > 0) {
+//             console.log('Matching Recipes New:');
+//             matchingRecipes.forEach(recipe => {
+//                 console.log(`Recipe Name: ${recipe.name}`);
+//                 console.log(`Recipe Link: ${recipe.link}`);
+//                 console.log('Ingredients:', recipe.ingredientsArray);
+//                 console.log("Recipe Image Link", recipe.imgSrc);
+//                 console.log('----------------------');
+//             });
+//         } else {
+//             console.log('No matching recipes found.');
+//         }
+//     })
+//     .catch(err => console.error('Error:', err));
 
-findRecipesByIngredientsNew(exampleIngredientsNew)
-    .then(matchingRecipes => {
-        if (matchingRecipes.length > 0) {
-            console.log('Matching Recipes New:');
-            matchingRecipes.forEach(recipe => {
-                console.log(`Recipe Name: ${recipe.name}`);
-                console.log(`Recipe Link: ${recipe.link}`);
-                console.log('Ingredients:', recipe.ingredientsArray);
-                console.log("Recipe Image Link", recipe.imgSrc);
-                console.log('----------------------');
-            });
-        } else {
-            console.log('No matching recipes found.');
-        }
-    })
-    .catch(err => console.error('Error:', err));
+// (async () => {
+//     const ingredients = ["salmon", "panko", "eggs"];
+const recipes = await findRecipesByIngredientsNew(exampleIngredientsNew);
+console.log(recipes); // Logs the array of recipes
+// })();
