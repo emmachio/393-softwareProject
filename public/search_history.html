@@ -18,15 +18,29 @@
         // Retrieve search history from local storage
         const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
 
+        // Target the history list container
         const historyList = document.getElementById('historyList');
+
+        // Store list items in an array
+        const listItems = [];
 
         // Display each search in the history
         searchHistory.forEach(query => {
             const listItem = document.createElement('li');
-            listItem.classList.add('historyItem');
+            listItem.classList.add(query);
             listItem.textContent = query;
             historyList.appendChild(listItem);
+            listItem.style.padding = "5px";
+            listItem.style.marginBottom = "8px";
+            listItem.style.borderBottom = "1px solid #ddd";
+            
+            // Add the listItem to the array
+            listItems.push(listItem);
         });
+
+
+        console.log(listItems); // Logs the array of `<li>` elements
+
     </script>
 </body>
 </html>

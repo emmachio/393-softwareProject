@@ -40,9 +40,9 @@ const recipesArray = [
 const ingredientsInput = document.getElementById('ingredients');
 const searchList = document.getElementById('searchList');
 
-let ingredientsArray = [];
+const ingredientsArray = [];
 
-// Function to display user input in the result section
+/*// Function to display user input in the result section
 function displayInputInResults() {
     const userIngredients = ingredientsInput.value.toLowerCase().split(',').map(item => item.trim());
 
@@ -58,8 +58,60 @@ function displayInputInResults() {
     listItem.textContent = `Your Ingredient: ${ingredient}`;
     searchList.appendChild(listItem);
 });
+}*/
+
+// Retrieve search history from local storage
+const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+
+// Display each search in the history
+searchHistory.forEach(query => {
+    const listItem = document.createElement('li');
+    listItem.classList.add(query);
+    listItem.textContent = query;
+    searchList.appendChild(listItem);
+    listItem.style.padding = "5px";
+    listItem.style.marginBottom = "8px";
+    listItem.style.borderBottom = "1px solid #ddd";
+    
+    // Add the listItem to the array
+    ingredientsArray.push(listItem);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    localStorage.removeItem('searchHistory'); // Clear saved search history
+});
+
+// Function to update the list
+function updateSearchList(value) {
+    // Add the value to the array
+    temporarySearchList.push(value);
+
+    // Clear the current displayed list
+    searchList.innerHTML = '';
+
+    // Display all values from the array
+    temporarySearchList.forEach(item => {
+        const listItem = document.createElement('li');
+        listItem.textContent = item;
+        searchList.appendChild(listItem);
+    });
 }
-console.log(searchList);
+
+// Event listener for form submission
+searchForm.addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent form submission
+
+    const inputValue = ingredientsInput.value.trim();
+    if (inputValue) {
+        updateSearchList(inputValue); // Update the list
+        ingredientsInput.value = ''; // Clear the input field
+    }
+});
+
+
+
+//console.log(listItems); // Logs the array of `<li>` elements
+
 
 // Add event listener to the ingredients input field
 // Event listener for the input field
