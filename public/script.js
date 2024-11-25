@@ -97,20 +97,9 @@ function updateSearchList(value) {
     });
 }
 
-// Event listener for form submission
-searchForm.addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevent form submission
-
-    const inputValue = ingredientsInput.value.trim();
-    if (inputValue) {
-        updateSearchList(inputValue); // Update the list
-        ingredientsInput.value = ''; // Clear the input field
-    }
-});
 
 
-
-//console.log(listItems); // Logs the array of `<li>` elements
+console.log(listItems); // Logs the array of `<li>` elements
 
 
 // Add event listener to the ingredients input field
