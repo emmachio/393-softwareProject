@@ -39,21 +39,55 @@ const recipesArray = [
 const ingredientsInput = document.getElementById('ingredients');
 const searchList = document.getElementById('searchList');
 
+let ingredientsArray = [];
+
 // Function to display user input in the result section
 function displayInputInResults() {
-  const userIngredients = ingredientsInput.value;
+    const userIngredients = ingredientsInput.value.toLowerCase().split(',').map(item => item.trim());
+
+    // Debugging: Check the user ingredients array
+    console.log("User Ingredients:", userIngredients);
 
   // Clear the previous result
   searchList.innerHTML = '';
 
-  // Display the current input value in the result section
-  if (userIngredients.trim() !== '') {
+  // Append each ingredient to the list
+  userIngredients.forEach(ingredient => {
     const listItem = document.createElement('li');
-    listItem.textContent = `Your Ingredients: ${userIngredients}`;
+    listItem.classList.add('historyItem');
+    listItem.textContent = `Your Ingredient: ${ingredient}`;
     searchList.appendChild(listItem);
-  }
+});
 }
 
 // Add event listener to the ingredients input field
-ingredientsInput.addEventListener('input', displayInputInResults);
+// Event listener for the input field
+/*ingredientsInput.addEventListener('input', function () {
+    // Get the current value from the input field
+    const currentValue = ingredientsInput.value.trim();
 
+    // Check if the input is not empty
+    if (currentValue) {
+        // Add the current input to the array if it isn't already there
+        if (!ingredientsArray.includes(currentValue)) {
+            ingredientsArray.push(currentValue);
+
+            // Clear the previous result
+            searchList.innerHTML = '';
+
+            // Update the display list
+            const listItem = document.createElement('li');
+            listItem.textContent = currentValue;
+            searchList.appendChild(listItem);
+
+            ingredientsInput.value = ingredientsArray;
+        }
+    }
+});
+searchHistory.forEach(query => {
+    const listItem = document.createElement('li');
+    listItem.classList.add('historyItem');
+    listItem.textContent = query;
+    historyList.appendChild(listItem);
+});
+*/
