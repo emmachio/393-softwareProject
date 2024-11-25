@@ -56,3 +56,4 @@ function displayInputInResults() {
 
 // Add event listener to the ingredients input field
 ingredientsInput.addEventListener('input', displayInputInResults);
+
