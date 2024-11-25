@@ -18,19 +18,51 @@ class Recipe {
 }
 
 
+// async function findRecipesByIngredients(ingredientsArray) {
+//     try {
+//
+//         // Read the JSON file asynchronously
+//         const data = await fs.readFile('AllRecipes.json', 'utf8');
+//         const jsonData = JSON.parse(data);
+//
+//         const matchingRecipes = [];
+//
+//         // Iterate through each recipe in the JSON data
+//         jsonData.forEach(item => {
+//             // Check if the ingredients match exactly
+//             if (JSON.stringify(item.ingredientsArray) === JSON.stringify(ingredientsArray)) {
+//                 const recipe = new Recipe(item.recipeName);
+//                 recipe.setLink(item.recipeLink);
+//                 item.ingredientsArray.forEach(ingredient => recipe.addIngredient(ingredient));
+//                 matchingRecipes.push(recipe);
+//             }
+//         });
+//
+//         return matchingRecipes; // Resolve with matching recipes
+//     } catch (error) {
+//         console.error('Error in findRecipesByIngredients:', error);
+//         throw error; // Reject the promise with the error
+//     }
+// }
+
 async function findRecipesByIngredients(ingredientsArray) {
     try {
-
         // Read the JSON file asynchronously
-        const data = await fs.readFile('AllRecipes.json', 'utf8');
+        const data = await fs.promises.readFile('AllRecipes.json', 'utf8');
         const jsonData = JSON.parse(data);
 
         const matchingRecipes = [];
 
         // Iterate through each recipe in the JSON data
         jsonData.forEach(item => {
-            // Check if the ingredients match exactly
-            if (JSON.stringify(item.ingredientsArray) === JSON.stringify(ingredientsArray)) {
+            // Check if the ingredientsArray items are partially present in the recipe's ingredientsArray
+            const containsAllIngredients = ingredientsArray.every(inputIngredient =>
+                item.ingredientsArray.some(recipeIngredient =>
+                    recipeIngredient.toLowerCase().includes(inputIngredient.toLowerCase())
+                )
+            );
+
+            if (containsAllIngredients) {
                 const recipe = new Recipe(item.recipeName);
                 recipe.setLink(item.recipeLink);
                 item.ingredientsArray.forEach(ingredient => recipe.addIngredient(ingredient));
@@ -60,6 +92,10 @@ const exampleIngredients = [
     "1 ½ teaspoons ground black pepper",
     "1 tablespoon olive oil, or as needed, divided"
 ];
+
+
+
+
 
 findRecipesByIngredients(exampleIngredients)
     .then(matchingRecipes => {
