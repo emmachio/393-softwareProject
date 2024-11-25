@@ -1,7 +1,7 @@
-imgFakeLink = 'https://walnuts.wpenginepowered.com/wp-content/uploads/2024/10/CWC-S0295-OnionRings_1500x1000-900x600.jpg';
+// imgFakeLink = 'https://walnuts.wpenginepowered.com/wp-content/uploads/2024/10/CWC-S0295-OnionRings_1500x1000-900x600.jpg';
 document.addEventListener("DOMContentLoaded", async () => {
     // Path to the JSON file
-    const jsonFilePath = './AllRecipes.json';
+    const jsonFilePath = '../AllRecipes.json';
     // console.log('working');
     try {
         // Fetch the JSON file and parse it
@@ -29,8 +29,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 // Create the image element
                 const img = document.createElement('img');
-                img.src = imgFakeLink; // Set image source
-                // img.src = item.image; // Set image source
+                // img.src = imgFakeLink; // Set image source
+                img.src = item.imgSrc; // Set image source
                 img.alt = `${item.recipeName}`; // Use recipe name as alt text
                 img.style.borderRadius = '15px'; // Curved edges
                 link.appendChild(img); // Append image to the link

@@ -1,6 +1,7 @@
 import puppeteer from 'puppeteer';
-//const fs = require('fs'); -> this line gives error
-import fs from 'fs/promises';
+//const fs = require('fs');
+//import fs from 'fs/promises';
+import fs from "fs";
 
 class Recipe {
     constructor(name) {
@@ -89,8 +90,8 @@ for (const {recipeName, recipeLink, imageSrc} of returnsEachNameAndLinkAndImage)
     recipe.imageSrc = imageSrc;
 
     console.log(`Recipe: ${recipe.name}`);
-    console.log('Image Source: ', recipe.imageSrc);
-    console.log('Ingredients:', recipe.ingredientsArray);
+    //console.log('Image Source: ', recipe.imageSrc);
+    //console.log('Ingredients:', recipe.ingredientsArray);
     addNewJSONElement(recipe.name, recipeLink, recipe.ingredientsArray, recipe.imageSrc);
 }
 
@@ -100,157 +101,80 @@ await browser.close();
 //Function to add to JSON
 //first check for the last line of the json
 //then add {
-function addNewJSONElement (recipeName, recipeLink, ingredientsArray, imageLink) {
-    fs.readFile("AllRecipes.json", "utf8", (err, data) => {
-        if (err) {
-            console.error("Error reading the JSON file:", err);
-            return;
-        }
-        try {
-            const jsonData = JSON.parse(data);
 
-            const newRecipe = {
-                recipeName: recipeName,
-                recipeLink: recipeLink,
-                ingredientsArray: ingredientsArray
-            };
-            jsonData.push(newRecipe);
-
-            fs.writeFile("AllRecipes.json", JSON.stringify(jsonData, null, 4), "utf8", (err) => {
-                if (err) {
-                    console.error("Error writing to the JSON file", err);
-                } else {
-                    console.log("New recipe added successfully!");
-                }
-            });
-        } catch (parseError) {
-            console.error("Error parsing the JSON file", parseError);
-        }
-    });
-}
-//Jani's Search
-export function findRecipesByIngredientsJani(userIngredients, recipesArray) {
-    // Filter recipes by user ingredients
-    const matchingRecipes = recipesArray.filter(recipe =>
-        userIngredients.every(userIngredient =>
-            recipe.ingredientsArray.some(recipeIngredient =>
-                recipeIngredient.toLowerCase().includes(userIngredient.toLowerCase())
-            )
-        )
-    );
-
-    // Return the matching recipes
-    return matchingRecipes;
-}
-// module.exports={findRecipesByIngredientsJani}
-
-// //END NEW CODE
-//
-// export function findRecipesByIngredient(ingredient, recipeObjects) {
-//     const matches = recipeObjects.filter(recipe =>
-//         recipe.name.toLowerCase().includes(ingredient.toLowerCase())
-//     );
-//
-//     if (matches.length > 0) {
-//         matches.forEach(match => console.log(`Found Recipe: ${match.name}, Image URL: ${match.image}`));
-//         return matches.map(match => ({ name: match.name, image: match.image }));
-//     } else {
-//         console.log(`No recipes found with ingredient: ${ingredient}`);
-//         return [];
-//     }
-// }
-// // Map over the extracted data to create instances of the Recipe class
-// console.log(recipeNames);
-
-// const recipeObjects = recipeNames.map(({ recipeName, imageUrl }) => new Recipe(recipeName, imageUrl));
-// recipeObjects.forEach(recipe => recipe.printRecipe());
-
-
-// Pause for 10 seconds, to see what's going on.
-//await new Pro mise(r => setTimeout(r, 10000));
-
-
-
-//    Recipe: Test Recipe, Image URL: https://example.com/image.jpg
-
-
-// const jsonFilePath = './AllRecipes.json';
-//
-// (async () => {
-//     // Load existing recipes from AllRecipes.json or initialize with an empty array
-//     let existingRecipes = [];
-//     if (fs.existsSync(jsonFilePath)) {
-//         const fileContent = fs.readFileSync(jsonFilePath, 'utf-8');
-//         try {
-//             existingRecipes = fileContent.trim() ? JSON.parse(fileContent) : []; // Handle empty file
-//         } catch (error) {
-//             console.error('Error parsing existing JSON file. Initializing with an empty array.');
-//             existingRecipes = [];
+// function addNewJSONElement (recipeName, recipeLink, ingredientsArray) {
+//     fs.readFile("AllRecipes.json", "utf8", (err, data) => {
+//         if (err) {
+//             console.error("Error reading the JSON file:", err);
+//             return;
 //         }
-//     } else {
-//         console.log('No existing file found. Initializing new JSON file.');
-//         fs.writeFileSync(jsonFilePath, JSON.stringify([]), 'utf-8'); // Create the file with an empty array
-//     }
+//         try {
+//             const jsonData = JSON.parse(data);
 //
-//     const browser = await puppeteer.launch({ headless: false });
-//     const page = await browser.newPage();
-//     await page.goto('https://www.allrecipes.com/recipes/455/everyday-cooking/more-meal-ideas/30-minute-meals/', { waitUntil: 'networkidle2' });
-//     await page.setViewport({ width: 1080, height: 1024 });
+//             const newRecipe = {
+//                 recipeName: recipeName,
+//                 recipeLink: recipeLink,
+//                 ingredientsArray: ingredientsArray
+//             };
+//             jsonData.push(newRecipe);
 //
-//     const recipeNameAndLinks = await page.evaluate(() => {
-//         const elements = document.querySelectorAll('a.mntl-card-list-items');
-//         return Array.from(elements).map(el => {
-//             const recipeName = el.querySelector('div.card__content > span > span.card__title-text')?.textContent.trim();
-//             const recipeLink = el.href;
-//             return { recipeName, recipeLink };
-//         });
+//             fs.writeFile("AllRecipes.json", JSON.stringify(jsonData, null, 4), "utf8", (err) => {
+//                 if (err) {
+//                     console.error("Error writing to the JSON file", err);
+//                 } else {
+//                     console.log("New recipe added successfully!");
+//                 }
+//             });
+//         } catch (parseError) {
+//             console.error("Error parsing the JSON file", parseError);
+//         }
 //     });
-//
-//     const recipes = [];
-//
-//     for (const { recipeName, recipeLink } of recipeNameAndLinks) {
-//         if (!recipeName || !recipeLink) continue;
-//
-//         console.log(`Navigating to: ${recipeLink}`);
-//         try {
-//             await page.goto(recipeLink, { waitUntil: 'networkidle2', timeout: 60000 });
-//
-//             // Check if it's a gallery page
-//             const isGallery = await page.evaluate(() => {
-//                 return !!document.querySelector('.gallery-container');
-//             });
-//
-//             if (isGallery) {
-//                 console.log(`Gallery page detected at ${recipeLink}. Skipping.`);
-//                 continue;
-//             }
-//
-//             // Try to fetch ingredients
-//             await page.waitForSelector('#mm-recipes-structured-ingredients_1-0 > ul > li', { timeout: 60000 });
-//             const ingredients = await page.evaluate(() => {
-//                 const ingredientElements = document.querySelectorAll('#mm-recipes-structured-ingredients_1-0 > ul > li');
-//                 return Array.from(ingredientElements).map(el => el.innerText.trim());
-//             });
-//
-//             const recipe = { name: recipeName, ingredients };
-//             recipes.push(recipe);
-//             console.log(`Fetched Recipe: ${recipe.name}`);
-//         } catch (error) {
-//             console.error(`Failed to fetch recipe at ${recipeLink}:`, error);
-//         }
-//     }
-//
-//     await browser.close();
-//
-//     // Merge new recipes with existing ones, avoiding duplicates
-//     const updatedRecipes = [...existingRecipes];
-//     for (const newRecipe of recipes) {
-//         if (!existingRecipes.some(recipe => recipe.name === newRecipe.name)) {
-//             updatedRecipes.push(newRecipe);
-//         }
-//     }
-//
-//     // Write the updated recipes back to the JSON file
-//     fs.writeFileSync(jsonFilePath, JSON.stringify(updatedRecipes, null, 2), 'utf-8');
-//     console.log(`Updated recipes saved to ${jsonFilePath}`);
-// })();
+// }
+
+const path = require('path');
+
+function addNewJSONElement(recipeName, recipeLink, ingredientsArray, imageSrc) {
+    const filePath = path.join(__dirname, "AllRecipes.json");
+
+    // Check if the JSON file exists
+    if (fs.existsSync(filePath)) {
+        console.log("JSON file exists:", filePath);
+
+        // Read the file and parse its contents
+        fs.readFile(filePath, "utf8", (err, data) => {
+            if (err) {
+                console.error("Error reading the JSON file:", err);
+                return;
+            }
+
+            try {
+                const jsonData = JSON.parse(data);
+
+                // Create a new recipe object
+                const newRecipe = {
+                    recipeName: recipeName,
+                    recipeLink: recipeLink,
+                    ingredientsArray: ingredientsArray,
+                    imageSrc: imageSrc
+                };
+
+                // Add the new recipe to the JSON array
+                jsonData.push(newRecipe);
+
+                // Write the updated array back to the JSON file
+                fs.writeFile(filePath, JSON.stringify(jsonData, null, 4), "utf8", (err) => {
+                    if (err) {
+                        console.error("Error writing to the JSON file:", err);
+                    } else {
+                        console.log("New recipe added successfully!");
+                    }
+                });
+            } catch (parseError) {
+                console.error("Error parsing the JSON file:", parseError);
+            }
+        });
+    } else {
+        console.error("JSON file NOT found:", filePath);
+    }
+}
+

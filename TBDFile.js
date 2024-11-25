@@ -1,11 +1,11 @@
 import fs from 'fs/promises';
 
-
 class Recipe {
-    constructor(name) {
+    constructor(name, imgSrc = null) {
         this.name = name;
         this.link = null;
         this.ingredientsArray = [];
+        this.imgSrc = imgSrc; // Initialize imgSrc with the provided value or null
     }
 
     setLink(link) {
@@ -18,19 +18,26 @@ class Recipe {
 }
 
 
-async function findRecipesByIngredients(ingredientsArray) {
-    try {
 
+
+export async function findRecipesByIngredients(ingredientsArray) {
+    try {
         // Read the JSON file asynchronously
-        const data = await fs.readFile('AllRecipes.json', 'utf8');
+        const data = await fs.readFile('AllRecipes.json', 'utf8')
         const jsonData = JSON.parse(data);
 
         const matchingRecipes = [];
 
         // Iterate through each recipe in the JSON data
         jsonData.forEach(item => {
-            // Check if the ingredients match exactly
-            if (JSON.stringify(item.ingredientsArray) === JSON.stringify(ingredientsArray)) {
+            // Check if the ingredientsArray items are partially present in the recipe's ingredientsArray
+            const containsAllIngredients = ingredientsArray.every(inputIngredient =>
+                item.ingredientsArray.some(recipeIngredient =>
+                    recipeIngredient.toLowerCase().includes(inputIngredient.toLowerCase())
+                )
+            );
+
+            if (containsAllIngredients) {
                 const recipe = new Recipe(item.recipeName);
                 recipe.setLink(item.recipeLink);
                 item.ingredientsArray.forEach(ingredient => recipe.addIngredient(ingredient));
@@ -44,6 +51,45 @@ async function findRecipesByIngredients(ingredientsArray) {
         throw error; // Reject the promise with the error
     }
 }
+
+export async function findRecipesByIngredientsNew(ingredientsArray) {
+    try {
+        // Read the JSON file asynchronously
+        const data = await fs.readFile('AllRecipes.json', 'utf8');
+        const jsonData = JSON.parse(data);
+
+        const matchingRecipes = [];
+
+        // Iterate through each recipe in the JSON data
+        jsonData.forEach(item => {
+            // Check if all ingredients required for the recipe are present in the user's available ingredients
+            const canMakeRecipe = item.ingredientsArray.every(recipeIngredient =>
+                ingredientsArray.some(inputIngredient =>
+                    inputIngredient.toLowerCase().includes(recipeIngredient.toLowerCase()) ||
+                    recipeIngredient.toLowerCase().includes(inputIngredient.toLowerCase())
+                )
+            );
+
+            if (canMakeRecipe) {
+                // Create a new Recipe instance, passing the name and imgSrc
+                const recipe = new Recipe(item.recipeName, item.imgSrc);
+                recipe.setLink(item.recipeLink);
+
+                // Add ingredients to the recipe
+                item.ingredientsArray.forEach(ingredient => recipe.addIngredient(ingredient));
+
+                // Add the recipe to the results array
+                matchingRecipes.push(recipe);
+            }
+        });
+
+        return matchingRecipes; // Return the recipes that can be made
+    } catch (error) {
+        console.error('Error in findRecipesByIngredients:', error);
+        throw error; // Propagate the error
+    }
+}
+
 
 const exampleIngredients = [
     "2 (14.75 ounce) cans salmon, drained and flaked",
@@ -60,8 +106,35 @@ const exampleIngredients = [
     "1 ½ teaspoons ground black pepper",
     "1 tablespoon olive oil, or as needed, divided"
 ];
+const exampleIngredientsNew = [
+    "salmon",
+    "panko",
+    "fresh parsley",
+    "eggs",
+    "green onions",
+    "Worcestershire",
+    "Parmesan cheese",
+    "Dijon mustard",
+    "creamy salad dressing",
+    "seafood seasoning)",
+    "garlic powder",
+    "black pepper",
+    "olive oil",
+    "vegetable oil",
+    "beef sirloin",
+    "fresh broccoli florets",
+    "bell pepper",
+    "2 carrots",
+    "green onion",
+    "minced garlic",
+    "soy sauce",
+    "sesame seeds"
+];
 
-findRecipesByIngredients(exampleIngredients)
+
+
+
+findRecipesByIngredients(exampleIngredientsNew)
     .then(matchingRecipes => {
         if (matchingRecipes.length > 0) {
             console.log('Matching Recipes:');
@@ -69,6 +142,23 @@ findRecipesByIngredients(exampleIngredients)
                 console.log(`Recipe Name: ${recipe.name}`);
                 console.log(`Recipe Link: ${recipe.link}`);
                 console.log('Ingredients:', recipe.ingredientsArray);
+                console.log('----------------------');
+            });
+        } else {
+            console.log('No matching recipes found.');
+        }
+    })
+    .catch(err => console.error('Error:', err));
+
+findRecipesByIngredientsNew(exampleIngredientsNew)
+    .then(matchingRecipes => {
+        if (matchingRecipes.length > 0) {
+            console.log('Matching Recipes New:');
+            matchingRecipes.forEach(recipe => {
+                console.log(`Recipe Name: ${recipe.name}`);
+                console.log(`Recipe Link: ${recipe.link}`);
+                console.log('Ingredients:', recipe.ingredientsArray);
+                console.log("Recipe Image Link", recipe.imgSrc);
                 console.log('----------------------');
             });
         } else {
