@@ -18,42 +18,42 @@ class Recipe {
 }
 
 
-async function findRecipesByIngredients(ingredientsArray) {
+// async function findRecipesByIngredients(ingredientsArray) {
+//     try {
+//         // Read the JSON file asynchronously
+//         const data = await fs.readFile('AllRecipes.json', 'utf8')
+//         const jsonData = JSON.parse(data);
+//
+//         const matchingRecipes = [];
+//
+//         // Iterate through each recipe in the JSON data
+//         jsonData.forEach(item => {
+//             // Check if the ingredientsArray items are partially present in the recipe's ingredientsArray
+//             const containsAllIngredients = ingredientsArray.every(inputIngredient =>
+//                 item.ingredientsArray.some(recipeIngredient =>
+//                     recipeIngredient.toLowerCase().includes(inputIngredient.toLowerCase())
+//                 )
+//             );
+//
+//             if (containsAllIngredients) {
+//                 const recipe = new Recipe(item.recipeName);
+//                 recipe.setLink(item.recipeLink);
+//                 item.ingredientsArray.forEach(ingredient => recipe.addIngredient(ingredient));
+//                 matchingRecipes.push(recipe);
+//             }
+//         });
+//
+//         return matchingRecipes; // Resolve with matching recipes
+//     } catch (error) {
+//         console.error('Error in findRecipesByIngredients:', error);
+//         throw error; // Reject the promise with the error
+//     }
+// }
+
+export async function findRecipesByIngredientsNew(ingredientsArray, pathway ='./AllRecipes.json' ) {
     try {
         // Read the JSON file asynchronously
-        const data = await fs.readFile('AllRecipes.json', 'utf8')
-        const jsonData = JSON.parse(data);
-
-        const matchingRecipes = [];
-
-        // Iterate through each recipe in the JSON data
-        jsonData.forEach(item => {
-            // Check if the ingredientsArray items are partially present in the recipe's ingredientsArray
-            const containsAllIngredients = ingredientsArray.every(inputIngredient =>
-                item.ingredientsArray.some(recipeIngredient =>
-                    recipeIngredient.toLowerCase().includes(inputIngredient.toLowerCase())
-                )
-            );
-
-            if (containsAllIngredients) {
-                const recipe = new Recipe(item.recipeName);
-                recipe.setLink(item.recipeLink);
-                item.ingredientsArray.forEach(ingredient => recipe.addIngredient(ingredient));
-                matchingRecipes.push(recipe);
-            }
-        });
-
-        return matchingRecipes; // Resolve with matching recipes
-    } catch (error) {
-        console.error('Error in findRecipesByIngredients:', error);
-        throw error; // Reject the promise with the error
-    }
-}
-
-export async function findRecipesByIngredientsNew(ingredientsArray) {
-    try {
-        // Read the JSON file asynchronously
-        const data = await fs.readFile('./AllRecipes.json', 'utf8');
+        const data = await fs.readFile(pathway, 'utf8');
         const jsonData = JSON.parse(data);
 
         const matchingRecipes = [];
@@ -164,24 +164,24 @@ const exampleIngredientsNew = [
 //         }
 //     })
 //     .catch(err => console.error('Error:', err));
-findRecipesByIngredients(exampleIngredientsNew)
-    .then(matchingRecipes => {
-        if (matchingRecipes.length > 0) {
-            console.log('Matching Recipes:');
-            matchingRecipes.forEach(recipe => {
-                console.log(`Recipe Name: ${recipe.name}`);
-                console.log(`Recipe Link: ${recipe.link}`);
-                console.log('Ingredients:', recipe.ingredientsArray);
-                console.log('----------------------');
-            });
-        } else {
-            console.log('No matching recipes found.');
-        }
-    })
-    .catch(err => console.error('Error:', err));
+// findRecipesByIngredients(exampleIngredientsNew)
+//     .then(matchingRecipes => {
+//         if (matchingRecipes.length > 0) {
+//             console.log('Matching Recipes:');
+//             matchingRecipes.forEach(recipe => {
+//                 console.log(`Recipe Name: ${recipe.name}`);
+//                 console.log(`Recipe Link: ${recipe.link}`);
+//                 console.log('Ingredients:', recipe.ingredientsArray);
+//                 console.log('----------------------');
+//             });
+//         } else {
+//             console.log('No matching recipes found.');
+//         }
+//     })
+//     .catch(err => console.error('Error:', err));
 
 // (async () => {
 //     const ingredients = ["salmon", "panko", "eggs"];
-const recipes = await findRecipesByIngredientsNew(exampleIngredientsNew);
-console.log(recipes); // Logs the array of recipes
+// const recipes = await findRecipesByIngredientsNew(exampleIngredientsNew);
+// console.log(recipes); // Logs the array of recipes
 // })();
