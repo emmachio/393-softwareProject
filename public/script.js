@@ -99,7 +99,7 @@ function updateSearchList(value) {
 
 
 
-console.log(listItems); // Logs the array of `<li>` elements
+//console.log(listItems); // Logs the array of `<li>` elements
 
 
 // Add event listener to the ingredients input field
