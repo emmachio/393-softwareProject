@@ -64,7 +64,7 @@ const returnsEachNameAndLinkAndImg = await page.evaluate(() => {
     return Array.from(elements).map(el => {
         const recipeName = el.querySelector('div.card__content > span > span.card__title-text')?.textContent.trim(); // gets title in same way as before
         const recipeLink = el.href; // grabs link from top of <a> header in html
-        return {recipeName, recipeLink};
+        const imgElement = el.querySelector('div.loc.card__top > div.card__media > div > img');
         const imageSrc = imgElement?.getAttribute('data-src') || imgElement?.src || null;
         return {recipeName, recipeLink, imageSrc}
     });
@@ -146,7 +146,7 @@ export function findRecipesByIngredientsJani(userIngredients, recipesArray) {
     return matchingRecipes;
 }
 // module.exports={findRecipesByIngredientsJani}
-;
+
 
 // //END NEW CODE
 //
