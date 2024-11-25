@@ -25,8 +25,8 @@ class Recipe {
 
 
 //makes it open
-// const browser = await puppeteer.launch({headless: false});
-const browser = await puppeteer.launch();
+ const browser = await puppeteer.launch({headless: false});
+//const browser = await puppeteer.launch();
 const page = await browser.newPage();
 //What page to go to
 await page.goto('https://www.allrecipes.com/recipes/455/everyday-cooking/more-meal-ideas/30-minute-meals/');
@@ -61,7 +61,7 @@ const returnsEachNameAndLinkAndImg = await page.evaluate(() => {
 
     const elements = document.querySelectorAll('a.mntl-card-list-items'); // Broaden to <a> selector for each recipe
 
-    return Array.from(elements).map(el => {
+    return Array.from(elements).filter(el => !el.href.includes('/gallery/') && !el.classList.contains('card--square-image-left')).map(el => {
         const recipeName = el.querySelector('div.card__content > span > span.card__title-text')?.textContent.trim(); // gets title in same way as before
         const recipeLink = el.href; // grabs link from top of <a> header in html
         const imgElement = el.querySelector('div.loc.card__top > div.card__media > div > img');
@@ -103,13 +103,13 @@ await browser.close();
 //first check for the last line of the json
 //then add {
 function addNewJSONElement (recipeName, recipeLink, ingredientsArray, imgSrc) {
-    fs.readFile("AllRecipes.json", "utf8", (err, data) => {
+    fs.readFile("testRecipe.json", "utf8", (err, data) => {
         if (err) {
             console.error("Error reading the JSON file:", err);
             return;
         }
         try {function addNewJSONElement (recipeName, recipeLink, ingredientsArray, imgSrc) {
-            fs.readFile("AllRecipes.json", "utf8", (err, data) => {
+            fs.readFile("testRecipe.json", "utf8", (err, data) => {
                 if (err) {
                     console.error("Error reading the JSON file:", err);
                     return;
@@ -125,7 +125,7 @@ function addNewJSONElement (recipeName, recipeLink, ingredientsArray, imgSrc) {
                     };
                     jsonData.push(newRecipe);
 
-                    fs.writeFile("AllRecipes.json", JSON.stringify(jsonData, null, 4), "utf8", (err) => {
+                    fs.writeFile("testRecipe.json", JSON.stringify(jsonData, null, 4), "utf8", (err) => {
                         if (err) {
                             console.error("Error writing to the JSON file", err);
                         } else {
@@ -147,7 +147,7 @@ function addNewJSONElement (recipeName, recipeLink, ingredientsArray, imgSrc) {
             };
             jsonData.push(newRecipe);
 
-            fs.writeFile("AllRecipes.json", JSON.stringify(jsonData, null, 4), "utf8", (err) => {
+            fs.writeFile("testRecipe.json", JSON.stringify(jsonData, null, 4), "utf8", (err) => {
                 if (err) {
                     console.error("Error writing to the JSON file", err);
                 } else {

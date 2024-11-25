@@ -134,7 +134,7 @@ await browser.close();
 const path = require('path');
 
 function addNewJSONElement(recipeName, recipeLink, ingredientsArray, imageSrc) {
-    const filePath = path.join(__dirname, "AllRecipes.json");
+    const filePath = path.join(__dirname, "testRecipe.json");
 
     // Check if the JSON file exists
     if (fs.existsSync(filePath)) {
