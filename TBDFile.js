@@ -45,10 +45,10 @@ export async function findRecipesByIngredients(ingredientsArray) {
     }
 }
 
-async function findRecipesByIngredientsNew(ingredientsArray) {
+export async function findRecipesByIngredientsNew(ingredientsArray) {
     try {
         // Read the JSON file asynchronously
-        const data = await fs.promises.readFile('AllRecipes.json', 'utf8');
+        const data = await fs.readFile('AllRecipes.json', 'utf8')
         const jsonData = JSON.parse(data);
 
         const matchingRecipes = [];
@@ -130,7 +130,7 @@ findRecipesByIngredients(exampleIngredients)
 findRecipesByIngredientsNew(exampleIngredients)
     .then(matchingRecipes => {
         if (matchingRecipes.length > 0) {
-            console.log('Matching Recipes:');
+            console.log('Matching Recipes New:');
             matchingRecipes.forEach(recipe => {
                 console.log(`Recipe Name: ${recipe.name}`);
                 console.log(`Recipe Link: ${recipe.link}`);
