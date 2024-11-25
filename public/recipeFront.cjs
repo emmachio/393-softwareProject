@@ -64,4 +64,4 @@ recipes.forEach(item => {
     console.log(individualRecipe.outerHTML);
     individualRecipe.offsetHeight;
 
-    widgetContainer.appendChild(individualRecipe);
+    widgetContainer.appendChild(individualRecipe);})
