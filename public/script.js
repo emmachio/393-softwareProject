@@ -39,29 +39,20 @@ const recipesArray = [
 const ingredientsInput = document.getElementById('ingredients');
 const searchList = document.getElementById('searchList');
 
-// Function to filter recipes based on the input
-function filterRecipesByIngredients() {
-  const userIngredients = ingredientsInput.value.toLowerCase().split(',').map(item => item.trim());
+// Function to display user input in the result section
+function displayInputInResults() {
+  const userIngredients = ingredientsInput.value;
 
-  // Filter recipes based on the user input
-  const filteredRecipes = recipesArray.filter(recipe =>
-      userIngredients.every(userIngredient =>
-          recipe.ingredientsArray.some(recipeIngredient =>
-              recipeIngredient.toLowerCase().includes(userIngredient)
-          )
-      )
-  );
-
-  // Clear the previous results
+  // Clear the previous result
   searchList.innerHTML = '';
 
-  // Display the filtered results
-  filteredRecipes.forEach(recipe => {
-      const listItem = document.createElement('li');
-      listItem.textContent = recipe.name; // Display recipe name
-      searchList.appendChild(listItem);
-  });
+  // Display the current input value in the result section
+  if (userIngredients.trim() !== '') {
+    const listItem = document.createElement('li');
+    listItem.textContent = `Your Ingredients: ${userIngredients}`;
+    searchList.appendChild(listItem);
+  }
 }
 
 // Add event listener to the ingredients input field
-ingredientsInput.addEventListener('input', filterRecipesByIngredients);
+ingredientsInput.addEventListener('input', displayInputInResults);
