@@ -2,6 +2,7 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
   event.preventDefault();
 
   const searchBar = document.getElementById('ingredients');
+  const searchList = document.getElementById('searchList');
   const query = searchBar.value.trim();
 
   if (query) {
@@ -36,11 +37,9 @@ const recipesArray = [
     { name: 'Pancakes', ingredientsArray: ['flour', 'egg', 'milk', 'sugar'] }
 ];
 
-// Get the input field and result section
-const ingredientsInput = document.getElementById('ingredients');
-const searchList = document.getElementById('searchList');
 
-const ingredientsArray = [];
+
+
 
 /*// Function to display user input in the result section
 function displayInputInResults() {
@@ -60,67 +59,39 @@ function displayInputInResults() {
 });
 }*/
 
-// Retrieve search history from local storage
-const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
-
-// Display each search in the history
-searchHistory.forEach(query => {
-    const listItem = document.createElement('li');
-    listItem.classList.add(query);
-    listItem.textContent = query;
-    searchList.appendChild(listItem);
-    listItem.style.padding = "5px";
-    listItem.style.marginBottom = "8px";
-    listItem.style.borderBottom = "1px solid #ddd";
-    
-    // Add the listItem to the array
-    ingredientsArray.push(listItem);
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    localStorage.removeItem('searchHistory'); // Clear saved search history
-});
-
-// Function to update the list
-function updateSearchList(value) {
-    // Add the value to the array
-    temporarySearchList.push(value);
-
-    // Clear the current displayed list
-    searchList.innerHTML = '';
-
-    // Display all values from the array
-    temporarySearchList.forEach(item => {
-        const listItem = document.createElement('li');
-        listItem.textContent = item;
-        searchList.appendChild(listItem);
-    });
-}
 
 
 
 //console.log(listItems); // Logs the array of `<li>` elements
 
 
-// Add event listener to the ingredients input field
-// Event listener for the input field
-ingredientsInput.addEventListener('input', function () {
-    // Get the current value from the input field
-    const currentValue = ingredientsInput.value.trim();
 
-    // Check if the input is not empty
-    if (currentValue) {
-        // Add the current input to the array if it isn't already there
-        if (!ingredientsArray.includes(currentValue)) {
-            ingredientsArray.push(currentValue);
+let ingredientsArray = [];
 
-            // Clear the previous result
-            searchList.innerHTML = '';
+// Get the input field and result section
+const ingredientsInput = document.getElementById('ingredients');
 
-            // Update the display list
-            const listItem = document.createElement('li');
-            listItem.textContent = currentValue;
-            searchList.appendChild(listItem);
+ingredientsInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        const value = ingredientsInput.value.trim();
+        if (value) {
+            ingredientsArray.push(value);
+            updateList();
+            console.log('Current array:', ingredientsArray);
+            ingredientsInput.value = '';
         }
+        else {
+            console.log('Input field is empty.');
+        }
+        event.preventDefault();
     }
 });
+
+function updateList() {
+    searchList.innerHTML = '';
+    ingredientsArray.forEach((item) => {
+        const listItem = document.createElement('li');
+        listItem.textContent = item;
+        searchList.appendChild(listItem);
+    });
+}
