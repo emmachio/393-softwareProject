@@ -137,10 +137,9 @@ const exampleIngredientsNew = [
     "eggs",
     "green onions",
     "Worcestershire",
-    "Parmesan cheese",
     "Dijon mustard",
     "creamy salad dressing",
-    "seafood seasoning)",
+    "seafood seasoning",
     "garlic powder",
     "black pepper",
     "olive oil",
@@ -174,22 +173,22 @@ const exampleIngredientsNew = [
 //     })
 //     .catch(err => console.error('Error:', err));
 //
-findRecipesByIngredientsNew(exampleIngredientsNew)
-    .then(matchingRecipes => {
-        if (matchingRecipes.length > 0) {
-            console.log('Matching Recipes New:');
-            matchingRecipes.forEach(recipe => {
-                console.log(`Recipe Name: ${recipe.name}`);
-                console.log(`Recipe Link: ${recipe.link}`);
-                console.log('Ingredients:', recipe.ingredientsArray);
-                console.log("Recipe Image Link", recipe.imgSrc);
-                console.log('----------------------');
-            });
-        } else {
-            console.log('No matching recipes found.');
-        }
-    })
-    .catch(err => console.error('Error:', err));
+// findRecipesByIngredientsNew(exampleIngredientsNew)
+//     .then(matchingRecipes => {
+//         if (matchingRecipes.length > 0) {
+//             console.log('Matching Recipes New:');
+//             matchingRecipes.forEach(recipe => {
+//                 console.log(`Recipe Name: ${recipe.name}`);
+//                 console.log(`Recipe Link: ${recipe.link}`);
+//                 console.log('Ingredients:', recipe.ingredientsArray);
+//                 console.log("Recipe Image Link", recipe.imgSrc);
+//                 console.log('----------------------');
+//             });
+//         } else {
+//             console.log('No matching recipes found.');
+//         }
+//     })
+//     .catch(err => console.error('Error:', err));
 
 
 // findRecipesByIngredients(exampleIngredientsNew)

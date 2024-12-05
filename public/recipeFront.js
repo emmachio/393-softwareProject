@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 // Create the link for the image
                 const link = document.createElement('a');
-                link.href = item.recipeLink;
+                link.href = item.link;
 
                 // Create the image element
                 const img = document.createElement('img');

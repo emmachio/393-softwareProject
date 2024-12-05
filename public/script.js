@@ -1,3 +1,4 @@
+import {resultJSON} from '../TBDFile.js';
 document.getElementById('searchForm').addEventListener('submit', function(event) {
   event.preventDefault();
 
@@ -52,6 +53,7 @@ function displayInputInResults() {
     listItem.textContent = `Your Ingredients: ${userIngredients}`;
     searchList.appendChild(listItem);
   }
+    resultJSON(searchList, '../AllRecipes.json')
 }
 
 // Add event listener to the ingredients input field
