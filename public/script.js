@@ -41,26 +41,6 @@ const recipesArray = [
 
 
 
-
-/*// Function to display user input in the result section
-function displayInputInResults() {
-    const userIngredients = ingredientsInput.value.toLowerCase().split(',').map(item => item.trim());
-
-    // Debugging: Check the user ingredients array
-    console.log("User Ingredients:", userIngredients);
-
-  // Clear the previous result
-  searchList.innerHTML = '';
-
-  // Append each ingredient to the list
-  userIngredients.forEach(ingredient => {
-    const listItem = document.createElement('li');
-    listItem.textContent = `Your Ingredient: ${ingredient}`;
-    searchList.appendChild(listItem);
-
-
-
-
 //console.log(listItems); // Logs the array of `<li>` elements
 
 
