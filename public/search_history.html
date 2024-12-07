@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search History</title>
-    <script defer src="script.js"></script>
     <link rel="stylesheet" type="text/css" href="format.css">
 </head>
 <body>
     <main>
         <h2>Search History</h2>
         <ul id="historyList"></ul>
-        <button onclick="location.href='ingredients.html'">Back to Cookbook</button>
+        <button id="clearHistory">Clear All History</button>
+        <a href='ingredients.html'">Back to Cookbook</a>    
     </main>
 
     <script>
@@ -21,10 +21,36 @@
         // Target the history list container
         const historyList = document.getElementById('historyList');
 
-        // Store list items in an array
-        const listItems = [];
+        function renderHistory() {
+            historyList.innerHTML = '';
 
-        // Display each search in the history
+            searchHistory.forEach((query, index) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = query;
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.style.marginLeft = '10px';
+
+                deleteButton.addEventListener('click', () => {
+                    searchHistory.splice(index, 1);
+                    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+                    renderHistory();
+                });
+                
+                listItem.appendChild(deleteButton);
+                historyList.appendChild(listItem);
+            });
+        }
+
+        renderHistory();
+
+        document.getElementById('clearHistory').addEventListener('click', () => {
+            localStorage.removeItem('searchHistory');
+            renderHistory();
+        });
+
+        /* // Display each search in the history
         searchHistory.forEach(query => {
             const listItem = document.createElement('li');
             listItem.classList.add(query);
@@ -39,8 +65,7 @@
         });
 
 
-        console.log(listItems); // Logs the array of `<li>` elements
-
+        console.log(listItems); // Logs the array of <li> elements */
     </script>
 </body>
 </html>
