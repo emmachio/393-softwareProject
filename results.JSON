@@ -1,7 +1,17 @@
 [
   {
+    "name": "To Die For Fettuccine Alfredo",
+    "link": "https://www.allrecipes.com/recipe/23431/to-die-for-fettuccine-alfredo/",
+    "imgSrc": "https://www.allrecipes.com/thmb/eKk0KqggH8lI990HfoXnoa1sGTQ=/282x188/filters:no_upscale():max_bytes(150000):strip_icc():focal(1996x1476:1998x1478):format(webp)/AR-23431-to-die-for-fettuccine-alfredo-DDMFS-beauty-3x4-b64d36c7ff314cb39774e261c5b18352.jpg"
+  },
+  {
     "name": "Quick Beef Stir-Fry",
     "link": "https://www.allrecipes.com/recipe/228823/quick-beef-stir-fry/",
     "imgSrc": "https://www.allrecipes.com/thmb/nk4LERGZHDUBW6i2iSmLgPD4Ef8=/282x188/filters:no_upscale():max_bytes(150000):strip_icc():focal(1999x0:2001x2):format(webp)/228823-quick-beef-stir-fry-DDMFS-4x3-1f79b031d3134f02ac27d79e967dfef5.jpg"
+  },
+  {
+    "name": "Scrumptious Salmon Cakes",
+    "link": "https://www.allrecipes.com/recipe/240130/scrumptious-salmon-cakes/",
+    "imgSrc": "https://www.allrecipes.com/thmb/G9aOUpwnE7Xq0ZNO07TaWdhoH2w=/282x188/filters:no_upscale():max_bytes(150000):strip_icc():focal(2283x1905:2285x1907):format(webp)/AR-240130-scrumptious-salmon-cakes-DDMFS-4x3-d3a4c962e2eb4dba861dc00d4c66dbd2.jpg"
   }
 ]
