@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="format.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+        }
+
+        #ingredients {
+            width: 20vw;
+            height: 1.650em;
+            padding: 10px;
+            font-size: 0.775em;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+
+        label[for=ingredients] {
+            font-family: Lucida-Console, monospace;
+            font-size: 0.775em;
+            margin-bottom: 10px;
+        }
+
+        .ingredientsSearch {
+            position: relative;
+            top: 20px;
+            text-align: left;
+            height: 5vh;
+            width: 80%;
+            padding-left: 2vh;
+            padding-top: 0;
+            display: flex;
+            flex-direction: column; /* Stack the label and input vertically */
+            align-items: flex-start;
+            margin-top: 0;
+            /*display: flex;*/
+            /*flex-direction: column;*/
+            /*align-items: center;*/
+        }
+
+        .ingredientsSearch label {
+            margin: 0;
+            padding: 0;
+        }
+
+        .ingredientsSearch input {
+            margin: 0;
+            padding: 0;
+        }
+
+        .ingredientsSearch input::placeholder{
+            font-family: Lucida-Console, monospace;
+            font-size: 0.875em;
+        }
+
+        .column1 {
+            width: 30%;
+            display: flex;
+        }
+        .column2 {
+            width: 70%;
+            display: flex;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .recipeWidget {
+            border-radius: 25px;
+            background: floralwhite;
+            padding: 10px;
+            text-align: center;
+            width: 230px; /* Fixed width for each item */
+            flex-grow: 1;
+         }
+        .widgetContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            max-width: 100%;
+            padding: 10px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<main>
+    <div class="header1">
+        <h2>JHEM's Cookbook</h2>
+    </div>
+    <div class="header2">
+        <button onclick="location.href='ingredients.html'" class="button button1">Ingredient Search</button>
+        <button onclick="location.href='cookbook.html'"  class="button button1">Personal Cookbook</button>
+        <button onclick="location.href='search_history.html'"  class="button button1">Search History</button>
+    </div>
+<!--    container for holding the two columns-->
+    <div class = "container">
+        <div class="column1">
+            <form class="ingredientsSearch" id="searchForm">
+                <label for="ingredients">Ingredients:</label><br>
+                <input type="text" id="ingredients" name="ingredients" placeholder="add ingredients"><br>
+            </form>
+
+        </div>
+        <div class="column2">
+            <div class="widgetContainer">
+<!--                dynamically adding recipe results onto the website-->
+                <div id="output"></div>
+                <script src="recipeFront.js"></script>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <footer>
+        <p>  &copy;2024 JHEM's Cookbook</p>
+    </footer>
+
+</main>
+
+
+<script src="script.js">
+    document.querySelector('.ingredientsSearch').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const searchBar = document.getElementById('ingredients');
+        const query = searchBar.value.trim();
+
+        if (query) {
+            fetch('/save-search', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query: query })
+            }).then(response => response.json()).then(data => {
+                console.log(data);
+                // Redirect to search history page after saving
+                window.location.href = '/search_history';
+            });
+        }
+    });
+</script>
+
+
+
+
+</body>
+</html>

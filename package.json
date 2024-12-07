@@ -12,10 +12,6 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.1",
-    "jsdom": "^25.0.1",
-    "puppeteer": "^23.9.0"
-  },
-  "devDependencies": {
-    "jasmine": "^5.4.0"
+    "puppeteer": "^23.5.2"
   }
 }
