@@ -142,26 +142,7 @@
 </main>
 
 
-<script src="script.js">
-    document.querySelector('.ingredientsSearch').addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        const searchBar = document.getElementById('ingredients');
-        const query = searchBar.value.trim();
-
-        if (query) {
-            fetch('/save-search', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query: query })
-            }).then(response => response.json()).then(data => {
-                console.log(data);
-                // Redirect to search history page after saving
-                window.location.href = '/search_history';
-            });
-        }
-    });
-</script>
+<script src="script.js"></script>
 
 
 
