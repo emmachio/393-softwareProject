@@ -50,7 +50,7 @@ class Recipe {
 //     }
 // }
 
-async function findRecipesByIngredientsNew(ingredientsArray, pathway ='./AllRecipes.json' ) {
+export async function findRecipesByIngredientsNew(ingredientsArray, pathway ='./AllRecipes.json') {
     try {
         // Read the JSON file asynchronously
         const data = await fs.readFile(pathway, 'utf8');
