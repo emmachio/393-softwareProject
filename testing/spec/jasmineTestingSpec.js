@@ -85,6 +85,11 @@ describe('findRecipesByIngredientsNew', () => {
             "tomato sauce",
             "meatballs",
             "cheese",
+            "basil",
+            "herbs",
+            "sugar",
+            "salt",
+            "pepper",
             "basil"
         ];
 
