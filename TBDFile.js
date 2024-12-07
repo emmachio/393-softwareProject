@@ -17,7 +17,6 @@ class Recipe {
     }
 }
 
-
 // async function findRecipesByIngredients(ingredientsArray) {
 //     try {
 //         // Read the JSON file asynchronously
