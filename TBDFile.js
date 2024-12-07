@@ -17,11 +17,17 @@ class Recipe {
     }
 }
 
-export async function findRecipesByIngredientsNew(ingredientsArray, pathway ='./AllRecipes.json') {
+
+
+async function findRecipesByIngredientsNew(ingredientsArray, pathway ='./AllRecipes.json' ) {
     try {
-        // Read the JSON file asynchronously
-        const data = await fs.readFile(pathway, 'utf8');
-        const jsonData = JSON.parse(data);
+        // Fetch the JSON file asynchronously
+        const response = await fetch(pathway);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch JSON file: ${response.statusText}`);
+        }
+
+        const jsonData = await response.json(); // Parse JSON data
 
         const matchingRecipes = [];
 
@@ -47,13 +53,14 @@ export async function findRecipesByIngredientsNew(ingredientsArray, pathway ='./
                 matchingRecipes.push(recipe);
             }
         });
-        // console.log(matchingRecipes)
+
         return matchingRecipes; // Return the recipes that can be made
     } catch (error) {
-        console.error('Error in findRecipesByIngredients:', error);
+        console.error('Error in findRecipesByIngredientsNew:', error);
         throw error; // Propagate the error
     }
 }
+
 export async function resultJSON(exampleIngredientsNew, pathway){
     try {
         // Clear the file by overwriting it with an empty array
