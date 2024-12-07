@@ -17,9 +17,6 @@ class Recipe {
     }
 }
 
-
-
-
 export async function findRecipesByIngredientsNew(ingredientsArray, pathway ='./AllRecipes.json') {
     try {
         // Read the JSON file asynchronously
@@ -115,6 +112,5 @@ const exampleIngredientsNew = [
     "Romano cheese",
     "Parmesan cheese"
 ]
-
 
 resultJSON(exampleIngredientsNew, './AllRecipes.json');
