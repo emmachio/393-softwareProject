@@ -1,49 +1,72 @@
+// import {resultJSON} from '../TBDFile.js';
+// import { JSDOM } from '../node_modules/jsdom/lib/api.js';
+// const { window } = new JSDOM(`
+//     <!DOCTYPE html>
+//     <html>
+//         <body>
+//             <div id="output"></div>
+//             <div class="widgetContainer"></div>
+//         </body>
+//     </html>
+// `);
+// global.document = window.document;
+document.addEventListener("DOMContentLoaded", async () => {
+    // Path to the JSON file
+    // resultJSON(exampleIngredientsNew, '../AllRecipes.json');
+    const jsonFilePath = '../results.JSON';
+    // console.log('working');
+    try {
+        // Fetch the JSON file and parse it
+        const response = await fetch(jsonFilePath);
+        if (!response.ok) {
+            throw new Error('Failed to fetch recipes JSON file');
+        }
+        const recipes = await response.json();
 
-document.addEventListener("DOMContentLoaded", () => {
-    // a list of recipe with its name, image src, and link to the website
-    const recipes = [{name: 'Walnut Delight',
-        image: 'https://walnuts.wpenginepowered.com/wp-content/uploads/2024/10/CWC-S0295-OnionRings_1500x1000-900x600.jpg',
-        link: 'https://walnuts.org/recipe/california-walnut-crusted-onion-rings/'},
-        {name: 'Walnut Delight',
-        image: 'https://walnuts.wpenginepowered.com/wp-content/uploads/2024/10/CWC-S0295-OnionRings_1500x1000-900x600.jpg',
-        link: 'https://walnuts.org/recipe/california-walnut-crusted-onion-rings/'}
-    ];
-    const outputDiv = document.getElementById('output');
-    // iterating through the list
-    if (outputDiv) {recipes.forEach(item => {
-        // creating recipe widget where the recipes will be held
-        const individualRecipe = document.createElement('div');
-        individualRecipe.classList.add('recipeWidget');
+        console.log('Recipes from JSON:', recipes);
 
-        // creating the link that the image will link to
-        const link = document.createElement('a');
-        link.href = item.link;
+        // Output container
+        const outputDiv = document.getElementById('output');
 
-        // Create the image element
-        // const img = document.querySelector('img');
-        const img = document.createElement('img');
-        img.src = item.image; // Set image source
-        img.alt = `${item.name}`; // Use name as alt text
-        img.style.borderRadius = '15px'; // Curved edges
-        link.appendChild(img); // Append image to the link
+        if (outputDiv) {
+            // Iterate through the recipes array
+            recipes.forEach(item => {
+                // Create recipe widget container
+                const individualRecipe = document.createElement('div');
+                individualRecipe.classList.add('recipeWidget');
 
-        // Append the link to the widget
-        individualRecipe.appendChild(link);
+                // Create the link for the image
+                const link = document.createElement('a');
+                link.href = item.link;
 
-        // Add text below the image
-        const text = document.createElement('p');
-        text.textContent = `${item.name}`;
-        individualRecipe.appendChild(text);
+                // Create the image element
+                const img = document.createElement('img');
+                // img.src = imgFakeLink; // Set image source
+                img.src = item.imgSrc; // Set image source
+                img.alt = item.name; // Use recipe name as alt text
+                img.style.borderRadius = '15px'; // Curved edges
+                link.appendChild(img); // Append image to the link
 
-        // Append the widget to the container
-        const widgetContainer = document.querySelector('.widgetContainer');
-        widgetContainer.appendChild(individualRecipe);
+                // Append the link to the recipe widget
+                individualRecipe.appendChild(link);
 
-        // Debugging output
-        console.log(individualRecipe.outerHTML);
-    });
+                // Add text below the image
+                const text = document.createElement('p');
+                text.textContent = item.name;
+                individualRecipe.appendChild(text);
 
-    } else {
-        console.error('Output div not found');
+                // Append the widget to the container
+                const widgetContainer = document.querySelector('.widgetContainer');
+                widgetContainer.appendChild(individualRecipe);
+
+                // Debugging output
+                console.log(individualRecipe.outerHTML);
+            });
+        } else {
+            console.error('Output div not found');
+        }
+    } catch (error) {
+        console.error('Error loading recipes:', error);
     }
 });
+

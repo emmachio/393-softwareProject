@@ -1,0 +1,79 @@
+[
+    {
+        "recipeName": "Homemade Spaghetti-O's",
+        "recipeLink": "https://www.allrecipes.com/homemade-spaghetti-o-s-recipe-8695137",
+        "ingredientsArray": [
+            "16 ounces ring-shaped pasta  (Anelli Siciliani)",
+            "30 ounces tomato sauce",
+            "1 tablespoon Cantanzaro herbs, (such as Savory Spice Shop® Cantanzaro herbs)",
+            "2 teaspoons white sugar",
+            "1 teaspoon salt, or to taste",
+            "1/2 teaspoon freshly ground black pepper",
+            "16 ounces Italian-style meatballs",
+            "1/2 cup freshly shaved Parmesan cheese, or as needed, for garnish",
+            "fresh basil, for garnish"
+        ],
+        "imgSrc": "https://www.allrecipes.com/thmb/seT-o8RsgLfnNczyxq4dvh7dneQ=/364x242/filters:no_upscale():max_bytes(150000):strip_icc():focal(1999x0:2001x2):format(webp)/8695137_Homemade-Spaghetti-Os_TheDailyGourmet_4x3-dddf3ef49dfa42e6ae5b83f98eebc715.jpg"
+    },
+    {
+        "recipeName": "Homemade Pasta Roni",
+        "recipeLink": "https://www.allrecipes.com/recipe/8508776/homemade-pasta-roni/",
+        "ingredientsArray": [
+            "2 cups chicken broth",
+            "3 ounces angel hair pasta",
+            "1 tablespoon butter",
+            "1 clove garlic, minced",
+            "½ teaspoon Italian seasoning",
+            "¼ cup heavy cream",
+            "¾ cup finely shredded Parmesan cheese",
+            "1 teaspoon minced fresh parsley, or to taste"
+        ],
+        "imgSrc": "https://www.allrecipes.com/thmb/fXAYHD03Y9Qt9XaVUXY5Tmau6oc=/364x242/filters:no_upscale():max_bytes(150000):strip_icc():focal(561x0:563x2):format(webp)/8508776-Pasta-Roni-thedailygourmet-8508778-1x1-1-85d2033a6eb1469893fe18a432038cfb.jpg"
+    },
+    {
+        "recipeName": "Quick and Easy Pancit",
+        "recipeLink": "https://www.allrecipes.com/recipe/47015/quick-and-easy-pancit/",
+        "ingredientsArray": [
+            "1 (12 ounce) package dried rice noodles",
+            "1 teaspoon vegetable oil",
+            "1 onion, finely diced",
+            "3 cloves garlic, minced",
+            "2 cups diced cooked chicken breast meat",
+            "1 small head cabbage, thinly sliced",
+            "4 carrot, thinly sliced",
+            "¼ cup soy sauce",
+            "2 lemons - cut into wedges, for garnish"
+        ],
+        "imgSrc": "https://www.allrecipes.com/thmb/fQTKUQc9Vx4EIS5ulM_qyv4ha-Q=/364x242/filters:no_upscale():max_bytes(150000):strip_icc():focal(1999x0:2001x2):format(webp)/RM-47015-quick-and-easy-pancit-ddmfs-3x4-2671-a0c27b0ad0da4b33ab7fc736cd7e7d7c.jpg"
+    },
+    {
+        "recipeName": "To Die For Fettuccine Alfredo",
+        "recipeLink": "https://www.allrecipes.com/recipe/23431/to-die-for-fettuccine-alfredo/",
+        "ingredientsArray": [
+            "24 ounces dry fettuccine pasta",
+            "1 cup butter",
+            "¾ pint heavy cream",
+            "salt and pepper to taste",
+            "1 dash garlic salt",
+            "¾ cup grated Romano cheese",
+            "½ cup grated Parmesan cheese"
+        ],
+        "imgSrc": "https://www.allrecipes.com/thmb/eKk0KqggH8lI990HfoXnoa1sGTQ=/282x188/filters:no_upscale():max_bytes(150000):strip_icc():focal(1996x1476:1998x1478):format(webp)/AR-23431-to-die-for-fettuccine-alfredo-DDMFS-beauty-3x4-b64d36c7ff314cb39774e261c5b18352.jpg"
+    },
+    {
+        "recipeName": "Quick Beef Stir-Fry",
+        "recipeLink": "https://www.allrecipes.com/recipe/228823/quick-beef-stir-fry/",
+        "ingredientsArray": [
+            "2 tablespoons vegetable oil",
+            "1 pound beef sirloin, cut into 2-inch strips",
+            "1 ½ cups fresh broccoli florets",
+            "1 red bell pepper, cut into matchsticks",
+            "2 carrots, thinly sliced",
+            "1 green onion, chopped",
+            "1 teaspoon minced garlic",
+            "2 tablespoons soy sauce",
+            "2 tablespoons sesame seeds, toasted"
+        ],
+        "imgSrc": "https://www.allrecipes.com/thmb/nk4LERGZHDUBW6i2iSmLgPD4Ef8=/282x188/filters:no_upscale():max_bytes(150000):strip_icc():focal(1999x0:2001x2):format(webp)/228823-quick-beef-stir-fry-DDMFS-4x3-1f79b031d3134f02ac27d79e967dfef5.jpg"
+    }
+]
